@@ -41,6 +41,20 @@
         \end{figure}
 
     \section{Domain Model}
+    
+        The waste container will manage an user detector. If an user is detected, in case the system was asleep it would be awaken, otherwise kept awake. If for some time no one is detected the system will turn in \textit{sleep mode} in order to consume less energy.
+        %
+        Moreover it will manage the door, which can be opened by the user pressing the ``Open'' button and can be closed by the user pressing the ``Close'' button otherwise after a timeout. The door will automatically close if sensors detect that the container is full or the temperature of the liquid too high. 
+        Even the operator can open and close the door through his dashboard to empty the container. 
+        %
+        Furthermore it will manage the information devices: two leds and a display.
+        The green one denote that there are no problems in the container and a user can spill his waste, while the red one indicates either the container is full or the liquid inside is too hot. 
+        %
+        The display will show a message to the user depending on the state of the container.\\\\
+        %
+        The operator dashboard let the operator to see the current data of the container's sensors, so the filling percentage and the temperature of the liquid inside. It offers also a button to empty the container, and a button to manage temperature problem inside the container.\\\\
+        %
+        The waste container and the operator dashboard have to communicate. More specifically the dashboard will read from the waste container sensors data and will send a signal to empty or restore the container. 
 
     \section{Requirements}
 
