@@ -13,6 +13,7 @@ class Door : public ServoMotor {
 
 public:
     Door(int pin);
+protected:
     void setAngle(int angle);
 };
 

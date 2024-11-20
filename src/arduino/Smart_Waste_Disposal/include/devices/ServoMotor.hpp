@@ -3,7 +3,7 @@
 
 class ServoMotor {
 
-public:
+protected:
     virtual void setAngle(int angle) = 0;
 };
 
