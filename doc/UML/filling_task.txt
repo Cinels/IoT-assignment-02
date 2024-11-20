@@ -1,0 +1,18 @@
+@startuml
+
+hide empty desciption
+
+state NOT_FULL
+
+state FULL
+
+state EMPTING
+
+
+
+[*] -right-> NOT_FULL
+NOT_FULL -right-> FULL
+FULL -down-> EMPTING
+EMPTING -left-> NOT_FULL
+
+@enduml
