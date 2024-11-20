@@ -8,8 +8,12 @@
 
 class Door : public ServoMotor {
 
+    int pin;
+    int angle;
+
 public:
-    void setAngle(int degrees);
+    Door(int pin);
+    void setAngle(int angle);
 };
 
 #endif
