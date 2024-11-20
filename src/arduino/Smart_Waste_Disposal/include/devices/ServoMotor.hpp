@@ -4,7 +4,7 @@
 class ServoMotor {
 
 public:
-    virtual void setAngle(int degrees) = 0;
+    virtual void setAngle(int angle) = 0;
 };
 
 #endif
