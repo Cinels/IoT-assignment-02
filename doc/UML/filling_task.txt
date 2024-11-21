@@ -1,5 +1,4 @@
 @startuml
-
 hide empty description
 
 state NOT_FULL
@@ -10,9 +9,9 @@ state EMPTING
 
 
 
-[*] -down-> NOT_FULL
-NOT_FULL -right-> FULL
-FULL -down-> EMPTING
-EMPTING -left-> NOT_FULL
+[*] -right-> NOT_FULL
+NOT_FULL -down-> FULL
+FULL -left-> EMPTING
+EMPTING -up-> NOT_FULL
 
 @enduml
