@@ -3,8 +3,16 @@
 
 class ServoMotor {
 
-protected:
-    virtual void setAngle(int angle) = 0;
+    int pin;
+    int angle;
+
+public:
+    ServoMotor(int pin);
+    void setAngle(int angle);
+
+private:
+    int getCurrent();
+
 };
 
 #endif

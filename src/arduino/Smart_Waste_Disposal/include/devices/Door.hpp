@@ -3,18 +3,15 @@
 
 #include "ServoMotor.hpp"
 
-#define OPEN (90)
-#define CLOSE (-90)
+class Door  {
 
-class Door : public ServoMotor {
-
-    int pin;
-    int angle;
+    ServoMotor* servoMotor;
 
 public:
     Door(int pin);
-protected:
-    void setAngle(int angle);
+    void open();
+    void close();
+
 };
 
 #endif
