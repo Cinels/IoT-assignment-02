@@ -11,5 +11,5 @@ void ServoMotor::setAngle(int angle) {
 }
 
 int ServoMotor::getCurrent() {
-    return (int)map(this->angle, -90, 90, 0 1024);
+    return (int)map(this->angle, -90, 90, 0, 1024);
 }
