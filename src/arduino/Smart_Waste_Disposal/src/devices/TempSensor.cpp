@@ -3,6 +3,7 @@
 
 TempSensor::TempSensor(int pin) {
     this->pin = pin;
+    pinMode(this->pin, INPUT);
 }
 
 float TempSensor::getTemperature() {
