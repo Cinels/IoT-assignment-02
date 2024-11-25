@@ -4,14 +4,12 @@
 #include "ServoMotor.hpp"
 
 class Door  {
-
+private:
     ServoMotor* servoMotor;
-
 public:
     Door(int pin);
     void open();
-    void close();
-
+    void close();   
 };
 
 #endif

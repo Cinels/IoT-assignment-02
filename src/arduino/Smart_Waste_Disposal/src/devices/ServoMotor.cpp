@@ -3,6 +3,7 @@
 
 ServoMotor::ServoMotor(int pin) {
     this->pin = pin;
+    pinMode(this->pin, OUTPUT);
 }
 
 void ServoMotor::setAngle(int angle) {
