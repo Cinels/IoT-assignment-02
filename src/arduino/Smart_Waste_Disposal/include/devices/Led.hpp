@@ -4,9 +4,8 @@
 #include "Light.hpp"
 
 class Led : public Light {
-
+private:
     int pin;
-
 public:
     Led(int pin);
     void switchOn();
