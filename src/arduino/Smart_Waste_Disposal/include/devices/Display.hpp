@@ -5,7 +5,7 @@
 
 class Display {
 private:
-    LiquidCrystal_I2C lcd;
+    LiquidCrystal_I2C* lcd;
 public:
     Display();
     void init();
