@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "utility/interrupt_utils.hpp"
 #include "devices/UserDetector.hpp"
 
 UserDetector::UserDetector(int pin) {
@@ -7,5 +8,8 @@ UserDetector::UserDetector(int pin) {
 }
 
 void UserDetector::init() {
-    //associa ad un interrupt
+    setInterrupt(this->pin, userDetected, FALLING);
 }
+
+__attribute__((unused))
+static void userDetected() {}
