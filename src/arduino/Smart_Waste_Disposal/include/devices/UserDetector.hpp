@@ -1,7 +1,7 @@
 #ifndef __USER_DETECTOR__
 #define __USER_DETECTOR__
 
-#include "PIR.hpp"
+#include "interfaces/PIR.hpp"
 
 class UserDetector : public PIR {
 private:

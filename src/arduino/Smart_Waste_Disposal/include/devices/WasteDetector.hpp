@@ -1,7 +1,7 @@
 #ifndef __WASTE_DETECTOR__
 #define __WASTE_DETECTOR__
 
-#include "Sonar.hpp"
+#include "interfaces/Sonar.hpp"
 
 class WasteDetector : public Sonar {
 private:

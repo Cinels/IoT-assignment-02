@@ -1,7 +1,7 @@
 #ifndef __LED__
 #define __LED__
 
-#include "Light.hpp"
+#include "interfaces/Light.hpp"
 
 class Led : public Light {
 private:
