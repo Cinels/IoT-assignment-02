@@ -1,51 +1,53 @@
 #include <stdlib.h>
-#include "utility/queue.hpp"
+#include "utility/Queue.hpp"
+#include "utility/Node.hpp"
 
 #define MAX_SIZE 10
 
-Queue* initialize() {
-  Queue* Q = (Queue*)malloc(sizeof(Queue));
-  Q->head = NULL;
-  Q->tail = NULL;
-  Q->size = 0;
-  return Q;
+Queue::Queue() {
+  this->head = nullptr;
+  this->tail = nullptr;
+  this->size = 0;
 }
 
-void clear(Queue* Q) {
-  while(Q->head != NULL) {
-    dequeue(Q);
+void Queue::clear() {
+  while(this->head != nullptr) {
+    this->dequeue();
   }
 }
 
-void enqueue(Queue* Q, void(*func)()) {
-  if(Q->size < MAX_SIZE) {
-    Node *temp = (Node*)malloc(sizeof(Node));
-    temp->next = NULL;
-    temp->func = func;
-    if (Q->head == NULL) {
-      Q->head = temp;
+int Queue::enqueue(void(*func)()) {
+  if(this->size < MAX_SIZE) {
+    Node *temp = new Node(func);
+    if (this->head == nullptr) {
+      this->head = temp;
     }
-    if (Q->tail != NULL) {
-      Q->tail->next = temp;
+    if (this->tail != nullptr) {
+      this->tail->setNext(temp);
     }
-    Q->size++;
-    Q->tail = temp;
+    this->size++;
+    this->tail = temp;
+    return 0;
   }
+  return 1;
 }
 
-void dequeue(Queue* Q) {
-  Node* temp = Q->head;
-  if(temp != NULL && Q->size > 0) {
-    if(Q->head->next == NULL) {
-      Q->head = NULL;
-      Q->tail = NULL;
+int Queue::dequeue() {
+  Node* temp = this->head;
+  if(temp != nullptr && this->size > 0) {
+    if(this->head->getNext() == nullptr) {
+      this->head = nullptr;
+      this->tail = nullptr;
+    } else {
+      this->head = this->head->getNext();
     }
-    else Q->head = Q->head->next;
-    Q->size--;
-    free(temp);
+    this->size--;
+    temp->~Node();
+    return 0;
   }
+  return 1;
 }
 
-Node* getNext(Queue* Q) {
-  return Q->head;
+Node* Queue::getNext() {
+  return this->head;
 }

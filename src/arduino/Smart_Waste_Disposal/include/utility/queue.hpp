@@ -1,25 +1,19 @@
 #ifndef __QUEUE__
 #define __QUEUE__
 
-typedef struct Node{
-  struct Node *next;
-  void (*func)();
-} Node;
+#include "Node.hpp"
 
-typedef struct Queue{
-  Node *head;
-  Node *tail;
+class Queue {
+private:
+  Node* head;
+  Node* tail;
   short size;
-} Queue;
-
-Queue* initialize();
-
-void clear(Queue* Q);
-
-void enqueue(Queue* Q, void(*func)());
-
-void dequeue(Queue* Q);
-
-Node* getNext(Queue* Q);
+public:
+  Queue();
+  void clear();
+  int enqueue(void (*func)());
+  int dequeue();
+  Node* getNext();
+};
 
 #endif
