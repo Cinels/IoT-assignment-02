@@ -1,9 +1,9 @@
 #ifndef __SCHEDULER__
 #define __SCHEDULER__
 
-#include "Task.h"
+#include "Task.hpp"
 
-#define MAX_TASKS 50
+#define MAX_TASKS 5
 
 class Scheduler {
   

@@ -11,12 +11,12 @@ public:
     bool updateAndCheckTime(int basePeriod);
 };
 
-virtual void Task::init(int period){
+void Task::init(int period) {
     myPeriod = period;  
     timeElapsed = 0;
 }
 
-bool Task::updateAndCheckTime(int basePeriod){
+bool Task::updateAndCheckTime(int basePeriod) {
     timeElapsed += basePeriod;
     if (timeElapsed >= myPeriod){
         timeElapsed = 0;
