@@ -1,14 +1,31 @@
 #ifndef __SERVO_MOTOR__
 #define __SERVO_MOTOR__
 
-class ServoMotor {
+#include <Servo.h>
+
+/*class ServoMotor {
 private:
     int pin;
-    int angle;
+    Servo motor;
     int getCurrent();
+    void on();
+    void off();
 public:
     ServoMotor(int pin);
-    void setAngle(int angle);
+    void setPosition(int angle);
+};*/
+
+class ServoMotor {
+
+public:
+  ServoMotor(int pin);
+
+  void on();
+  void setPosition(int angle);
+  void off();
+  Servo motor;  
+private:
+  int pin;
 };
 
 #endif
