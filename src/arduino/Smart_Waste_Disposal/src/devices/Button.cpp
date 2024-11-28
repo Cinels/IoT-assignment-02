@@ -2,26 +2,16 @@
 #include "utility/interrupt_utils.hpp"
 #include <Arduino.h>
 
-Button::Button(int pin, Queue* Q) {
+Button::Button(int pin) {
     this->pin = pin;
-    this->Q = Q;
+    pinMode(this->pin, INPUT);
 }
 
 void Button::init(buttonType type) {
     switch (type) {
-    case OPEN_BUTTON: setInterrupt(this->pin, openButtonPressed, FALLING); break;
-    case CLOSE_BUTTON: setInterrupt(this->pin, closeButtonPressed, FALLING); break;
+    case OPEN_BUTTON: setInterrupt(this->pin, openButtonPressed, RISING); break;
+    case CLOSE_BUTTON: setInterrupt(this->pin, closeButtonPressed, RISING); break;
     default: break;
     }
-    
 }
 
-__attribute__((unused))
-static void openButtonPressed() {
-    //aggiungi in coda il fatto che sei stato premuto
-}
-
-__attribute__((unused))
-static void closeButtonPressed() {
-    //aggiungi in coda il fatto che sei stato premuto
-}
