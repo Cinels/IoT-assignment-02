@@ -11,6 +11,7 @@ private:
 public:
     WasteDetector(int trigPin, int echoPin);
     float getDistance();
+    float getFilling();
 };
 
 #endif
