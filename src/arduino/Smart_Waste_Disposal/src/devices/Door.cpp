@@ -1,8 +1,9 @@
 #include "devices/Door.hpp"
 #include "devices/ServoMotor.hpp"
+#include <Arduino.h>
 
-#define OPEN (90)
-#define CLOSE (-90)
+#define OPEN (0)
+#define CLOSE (180)
 
 Door::Door(int pin) {
     this->servoMotor = new ServoMotor(pin);
@@ -10,9 +11,9 @@ Door::Door(int pin) {
 }
 
 void Door::open() {
-    this->servoMotor->setAngle(OPEN);
+    this->servoMotor->setPosition(OPEN);
 }
 
 void Door::close() {
-    this->servoMotor->setAngle(CLOSE);
+    this->servoMotor->setPosition(CLOSE);
 }
