@@ -5,4 +5,10 @@
 
 void setInterrupt(uint8_t pin, void (*func)(), uint8_t mode);
 
+void userDetected();
+
+void openButtonPressed();
+
+void closeButtonPressed();
+
 #endif
