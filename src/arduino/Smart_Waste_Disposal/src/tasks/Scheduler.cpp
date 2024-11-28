@@ -1,4 +1,5 @@
 #include "tasks/Scheduler.hpp"
+#include <Arduino.h>
 
 void Scheduler::init(int basePeriod) {
     this->basePeriod = basePeriod;
@@ -14,7 +15,7 @@ bool Scheduler::addTask(Task* task) {
 }
 
 void Scheduler::schedule() {
-    //wait your time
+    delay(this->basePeriod);
     for (int i = 0; i < this->nTasks; i++) {
         if (this->taskList[i]->updateAndCheckTime(this->basePeriod)) {
             this->taskList[i]->tick();
