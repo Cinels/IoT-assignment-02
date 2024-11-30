@@ -3,11 +3,11 @@
 
 #include "Task.hpp"
 
-class ContainerTaks : public Task {
+class ContainerTask : public Task {
 private:
     enum {SLEEP, AWAKE, OPEN, CLOSE} state;
 public:
-    ContainerTaks(int period);
+    ContainerTask(int period);
     void tick();
 };
 

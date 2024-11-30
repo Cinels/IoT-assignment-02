@@ -1,11 +1,11 @@
-#include "tasks/ContainerTaks.hpp"
+#include "tasks/ContainerTask.hpp"
 #include <Arduino.h>
 #include "tasks/Task.hpp"
 
-ContainerTaks::ContainerTaks(int period) {
+ContainerTask::ContainerTask(int period) {
     Task::init(period);
 }
 
-void ContainerTaks::tick() {
+void ContainerTask::tick() {
     Serial.println("CONTAINER TASK");
 }

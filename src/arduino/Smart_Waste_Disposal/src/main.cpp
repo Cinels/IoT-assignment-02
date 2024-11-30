@@ -7,28 +7,26 @@
 #include "devices/UserDetector.hpp"
 #include "devices/WasteDetector.hpp"
 #include "tasks/Scheduler.hpp"
-//#include "tasks/Task.hpp"
-#include "tasks/ContainerTaks.hpp"
+#include "tasks/ContainerTask.hpp"
 #include "tasks/FillingTask.hpp"
 #include "tasks/TemperatureTask.hpp"
 #include <Arduino.h>
 
-Scheduler s;
+Scheduler scheduler;
 
 void setup() {
   Serial.begin(9600);
-  //s = new Scheduler();
-  s.init(150);
+  scheduler.init(150);
   
   TemperatureTask* TT = new TemperatureTask(50);
-  ContainerTaks* CT = new ContainerTaks(100);
+  ContainerTask* CT = new ContainerTask(100);
   FillingTask* FT = new FillingTask(150);
 
-  s.addTask(TT);
-  s.addTask(CT);
-  s.addTask(FT);
+  scheduler.addTask(TT);
+  scheduler.addTask(CT);
+  scheduler.addTask(FT);
 }
 
 void loop() {
-  s.schedule();
+  scheduler.schedule();
 }
