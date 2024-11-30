@@ -4,6 +4,7 @@
 void Scheduler::init(int basePeriod) {
     this->basePeriod = basePeriod;
     this->nTasks = 0;
+    this->ts = millis();
 }
 
 bool Scheduler::addTask(Task* task) {
@@ -15,11 +16,12 @@ bool Scheduler::addTask(Task* task) {
 }
 
 void Scheduler::schedule() {
-    delay(this->basePeriod);
-    for (int i = 0; i < this->nTasks; i++) {
-        if (this->taskList[i]->updateAndCheckTime(this->basePeriod)) {
-            this->taskList[i]->tick();
+    if(millis() - ts >= (unsigned long)this->basePeriod) {
+        for (int i = 0; i < this->nTasks; i++) {
+            if (this->taskList[i]->updateAndCheckTime(this->basePeriod)) {
+                this->taskList[i]->tick();
+            }
         }
+        ts = millis();
     }
-    
 }

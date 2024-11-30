@@ -3,13 +3,14 @@
 
 #include "Task.hpp"
 
-#define MAX_TASKS 5
+#define MAX_TASKS 3
 
 class Scheduler {
   
   int basePeriod;
   int nTasks;
   Task* taskList[MAX_TASKS];  
+  unsigned long ts;
 
 public:
   void init(int basePeriod);  
