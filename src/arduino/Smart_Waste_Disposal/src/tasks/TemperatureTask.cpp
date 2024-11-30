@@ -15,8 +15,8 @@ TemperatureTask::TemperatureTask(int period) {
 }
 
 void TemperatureTask::init(Flag* tempflag, Flag* fillflag) {
-    this->tempFlag = tempFlag;
-    this->fillFlag = fillFlag;
+    this->tempAllarm = tempAllarm;
+    this->containerFull = containerFull;
 }
 
 void TemperatureTask::setDevices(TempSensor* tempSensor, Led* greenLed, Led* redLed, Display* display, Door* door) {
@@ -37,29 +37,30 @@ void TemperatureTask::tick() {
         }
         break;
     case ALERT:
-        if(this->tempSensor->getTemperature() <= MAX_TEMP) {
-            this->state = OK;
-        } else if ((millis() - ts > ALERT_TIME) && (this->tempSensor->getTemperature() > MAX_TEMP)) {
+        if ((millis() - ts > ALERT_TIME) && (this->tempSensor->getTemperature() > MAX_TEMP)) {
             this->state = ALLARM;
-            this->tempFlag->setFlag(true);
+            this->tempAllarm->setFlag(true);
             this->greenLed->switchOff();
             this->redLed->switchOn();
             this->display->setText(DISPLAY_POSITION, "PROBLEM DETECTED");
             this->door->close();
-        }
+        } else if(this->tempSensor->getTemperature() <= MAX_TEMP) {
+            this->state = OK;
+        } 
         break;
     case RESTORING:
         if(millis() - ts >= RESTORING_TIME) {
             this->state = OK;
-            this->tempFlag->setFlag(false);
-            if(!this->fillFlag->getFlag()) {
+            this->tempAllarm->setFlag(false);
+            if(!this->containerFull->getFlag()) {
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
+            } else {
+                this->display->setText(DISPLAY_POSITION, "CONTAINER FULL");
             }
             this->door->close();
-            this->ts = millis();
         }
         break;
     default: break;
