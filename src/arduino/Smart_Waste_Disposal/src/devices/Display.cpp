@@ -12,6 +12,12 @@ void Display::init() {
 }
 
 void Display::setText(int row, int col, String text) {
+    lcd->backlight();
     lcd->setCursor(row, col);
     lcd->print(text);
+}
+
+void Display::clear() {
+    lcd->clear();
+    lcd->noBacklight();
 }
