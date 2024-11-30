@@ -10,6 +10,7 @@ public:
     Display();
     void init();
     void setText(int row, int col, String text);
+    void clear();
 };
 
 #endif
