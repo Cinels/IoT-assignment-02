@@ -1,26 +1,64 @@
 #include "tasks/FillingTask.hpp"
 #include <Arduino.h>
-#include "tasks/Task.hpp"
 
-#define TRIG_PIN 5
-#define ECHO_PIN 6
 #define CONTAINER_FULL 100.0
+
+#define DISPLAY_POSITION 0, 1
+#define DISPLAY_POSITION_2 0, 2
+
+#define EMPTY_TIME 10
 
 FillingTask::FillingTask(int period) {
     Task::init(period);
-    this->wasteDetector = new WasteDetector(TRIG_PIN, ECHO_PIN);
+    this->state = AVAILABLE;
+}
+
+void FillingTask::init(Flag* tempflag, Flag* fillflag) {
+    this->tempAllarm = tempAllarm;
+    this->containerFull = containerFull;
+}
+
+void FillingTask::setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* redLed, Display* display, Door* door) {
+    this->wasteDetector = wasteDetector;
+    this->greenLed = greenLed;
+    this->redLed = redLed;
+    this->display = display;
+    this->door = door;
 }
 
 void FillingTask::tick() {
     Serial.println("FILLING TASK");
-    if ((this->AVAILABLE) && (this->wasteDetector->getFilling() >= CONTAINER_FULL)) {
-        this->state = FULL;
-        //setta il pin globale
-    }        
+    switch (this->state) {
+    case AVAILABLE:
+        if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
+            this->state = FULL;
+            this->containerFull->setFlag(true);
+            this->greenLed->switchOff();
+            this->redLed->switchOn();
+            if(!this->tempAllarm->getFlag()) this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
+            this->door->close();
+        }
+        break;
+    case EMPTING:
+        if(millis() - ts >= EMPTY_TIME) {
+            this->state = AVAILABLE;
+            if(!this->tempAllarm->getFlag()) {
+                this->redLed->switchOff();
+                this->greenLed->switchOn();
+                this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
+                this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
+            }
+            this->door->close();
+        }
+        break;
+    default: break;
+    }
 }
 
 void FillingTask::empty() {
     if(this->state == FULL) {
-        this->state == EMPTING;
+        this->state = EMPTING;
+        this->door->open();
+        this->ts = millis();
     }
 }
