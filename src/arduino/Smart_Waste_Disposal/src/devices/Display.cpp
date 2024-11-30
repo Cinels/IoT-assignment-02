@@ -8,6 +8,7 @@ Display::Display() {
 void Display::init() {
     lcd->init();
     lcd->clear();
+    lcd->noBacklight();
 }
 
 void Display::setText(int row, int col, String text) {
