@@ -39,7 +39,7 @@ void TemperatureTask::tick() {
     case ALERT:
         if ((millis() - ts > ALERT_TIME) && (this->tempSensor->getTemperature() > MAX_TEMP)) {
             this->state = ALLARM;
-            this->tempAllarm->setFlag(true);
+            this->tempAllarm->setValue(true);
             this->greenLed->switchOff();
             this->redLed->switchOn();
             this->display->setText(DISPLAY_POSITION, "PROBLEM DETECTED");
@@ -51,8 +51,8 @@ void TemperatureTask::tick() {
     case RESTORING:
         if(millis() - ts >= RESTORING_TIME) {
             this->state = OK;
-            this->tempAllarm->setFlag(false);
-            if(!this->containerFull->getFlag()) {
+            this->tempAllarm->setValue(false);
+            if(!this->containerFull->getValue()) {
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");

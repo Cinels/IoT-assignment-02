@@ -63,7 +63,7 @@ void ContainerTask::tick() {
     case CLOSE:
         if(millis() - ts >= CLOSE_TIME) {
             this->state = AWAKE;
-            if(!this->tempAllarm->getFlag() && !this->containerFull->getFlag()) {
+            if(!this->tempAllarm->getValue() && !this->containerFull->getValue()) {
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
             }

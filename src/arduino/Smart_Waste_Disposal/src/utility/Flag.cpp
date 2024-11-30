@@ -4,10 +4,10 @@ Flag::Flag() {
     this->flag = false;
 }
 
-bool Flag::getFlag() {
+bool Flag::getValue() {
     return this->flag;
 }
 
-void Flag::setFlag(bool value) {
+void Flag::setValue(bool value) {
     this->flag = value;
 }

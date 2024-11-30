@@ -32,17 +32,17 @@ void FillingTask::tick() {
     case AVAILABLE:
         if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
             this->state = FULL;
-            this->containerFull->setFlag(true);
+            this->containerFull->setValue(true);
             this->greenLed->switchOff();
             this->redLed->switchOn();
-            if(!this->tempAllarm->getFlag()) this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
+            if(!this->tempAllarm->getValue()) this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
             this->door->close();
         }
         break;
     case EMPTING:
         if(millis() - ts >= EMPTY_TIME) {
             this->state = AVAILABLE;
-            if(!this->tempAllarm->getFlag()) {
+            if(!this->tempAllarm->getValue()) {
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");

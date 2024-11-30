@@ -6,8 +6,8 @@ private:
     bool flag;
 public:
     Flag();
-    bool getFlag();
-    void setFlag(bool value);
+    bool getValue();
+    void setValue(bool value);
 };
 
 #endif
