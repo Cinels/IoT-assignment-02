@@ -11,20 +11,5 @@ public:
     bool updateAndCheckTime(int basePeriod);
 };
 
-void Task::init(int period) {
-    myPeriod = period;  
-    timeElapsed = 0;
-}
-
-bool Task::updateAndCheckTime(int basePeriod) {
-    timeElapsed += basePeriod;
-    if (timeElapsed >= myPeriod){
-        timeElapsed = 0;
-        return true;
-    } else {
-        return false; 
-    }
-}
-
 #endif
 
