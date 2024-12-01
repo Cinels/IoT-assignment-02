@@ -43,10 +43,6 @@ root.rowconfigure(2, weight=3)
 root.rowconfigure(2, weight=2)
 root.resizable(False, False)
 
-# clears history file
-with open(history_text_path, 'w') as f:
-	pass
-# f.close()
 
 titleLabel = Label(text='OPERATOR DASHBOARD', font=(30))
 titleLabel.grid(column=0, row=0, columnspan=2)
@@ -58,6 +54,10 @@ temperatureLabel.grid(column=1, row=1)
 
 filling = 0.0
 temperature = 25.0
+
+timeArray = []
+fillArray = []
+tempArray = []
 
 #-----------Data_management-------------
 
@@ -84,7 +84,6 @@ image_label.grid(column=0, row=2, columnspan=2)
 def updateImage():
 	global img
 	try:
-		# with Image.open(history_img_path) as photo:
 		photo = Image.open(history_img_path)
 		img = ImageTk.PhotoImage(photo)
 		photo.close()
@@ -130,67 +129,41 @@ restoreButton.grid(column=1, row=3)
 
 #-----------History_management-------------
 
-# saves history data on file
-def saveHistory(data):
-	with open(history_text_path, 'r+')as f: 
-		lines = f.readlines()
-		n = min(len(lines) + 1, 150)
-		lines.insert(0, data)
-		f.seek(0, 0)
-		for line in lines[0:n]:
-			f.write(line)
-	# f.close()
-
-# reads history data from file
-def readHistory():
-	timeA = list()
-	fillA = list()
-	tempA = list()
-	
-	with open(history_text_path, 'r') as f:
-		tmp = f.read()
-	# f.close()
-	rawTmp = tmp.replace("\n", "").split(" ")
-	for i in range(rawTmp.count("")):
-		rawTmp.remove("")
-	for i in range(len(rawTmp)):
-		if i % 3 == 0:
-			timeA.append(float(rawTmp[i]))
-		elif i % 3 == 1:
-			fillA.append(float(rawTmp[i]))
-		elif i % 3 == 2:
-			tempA.append(float(rawTmp[i]))
-	return timeA, fillA, tempA 
-
 # generate a graph with history data and saves on a png
-def generateGraph(time, fill, temp):
+def generateGraph():
 	try:
-		maxFill = [100]*len(fill)
-		maxTemp = [50]*len(temp)
-		
+		maxFill = [100]*len(fillArray)
+		maxTemp = [50]*len(tempArray)
+
 		plt.title("History")
-		plt.plot(time, fill, 'c', label='Filling %')
-		plt.plot(time, temp, 'r', label='Temperature')
-		plt.plot(time, maxFill, 'paleturquoise', label='Max Filling', linewidth=0.5)
-		plt.plot(time, maxTemp, 'salmon', label='Max Temperature', linewidth=0.5)
+		plt.plot(timeArray, fillArray, 'c', label='Filling %')
+		plt.plot(timeArray, tempArray, 'r', label='Temperature')
+		plt.plot(timeArray, maxFill, 'paleturquoise', label='Max Filling', linewidth=0.5)
+		plt.plot(timeArray, maxTemp, 'salmon', label='Max Temperature', linewidth=0.5)
 		plt.ylim(ymin=0, ymax=110)
 		plt.xlabel("minutes")
 		plt.legend(loc="upper left")
+		plt.locator_params(axis='x', nbins=10)
 		plt.savefig(history_img_path)
 		plt.close()
 
 	except MemoryError:
 		pass
 	
+
 # history data loop, which saves data
 def saveData():
 	t0 = time.time()
 	while(True):
 		ts = time.time()
-		string = str("{:.2f}".format((time.time() - t0)/60)) + " " + str(filling) + " " + str(temperature) + " \n"
-		saveHistory(string)
-		timeA, fillA, tempA = readHistory()
-		generateGraph(timeA, fillA, tempA)
+		timeArray.insert(0, float("{:.2f}".format((time.time() - t0)/60)))
+		fillArray.insert(0, filling)
+		tempArray.insert(0, temperature)
+		if len(timeArray) > 200:
+			timeArray.pop(200)
+			fillArray.pop(200)
+			tempArray.pop(200)
+		generateGraph()
 		while(time.time() - ts < SAVE_TIME):
 			pass
 		
