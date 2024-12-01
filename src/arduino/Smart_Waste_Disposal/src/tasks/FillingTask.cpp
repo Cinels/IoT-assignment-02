@@ -3,9 +3,6 @@
 
 #define CONTAINER_FULL 100.0
 
-#define DISPLAY_POSITION 0, 1
-#define DISPLAY_POSITION_2 0, 2
-
 #define EMPTY_TIME 10
 
 FillingTask::FillingTask(int period) {
