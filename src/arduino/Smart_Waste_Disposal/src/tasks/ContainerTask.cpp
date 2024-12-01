@@ -11,13 +11,6 @@
 
 ContainerTask::ContainerTask(int period) {
     Task::init(period);
-    this->state = AWAKE;
-    this->ts = millis();
-}
-
-void ContainerTask::init(Flag* tempflag, Flag* fillflag) {
-    this->tempAllarm = tempAllarm;
-    this->containerFull = containerFull;
 }
 
 void ContainerTask::setDevices(Button* openButton, Button* closeButton, Led* greenLed, Led* redLed, Display* display, Door* door, UserDetector* userDetector) {
@@ -30,20 +23,42 @@ void ContainerTask::setDevices(Button* openButton, Button* closeButton, Led* gre
     this->userDetector = userDetector;
 }
 
+void ContainerTask::init(Flag* tempflag, Flag* fillflag) {
+    this->tempAllarm = tempAllarm;
+    this->containerFull = containerFull;
+    
+    this->greenLed->switchOn();
+    this->redLed->switchOff();
+    this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
+    this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
+    this->door->close();
+
+    this->state = AWAKE;
+    this->ts = millis();
+}
+
 void ContainerTask::tick() {
-    Serial.println("CONTAINER TASK");
+    Serial.print("CONTAINER State: ");
+    Serial.println(this->state);
     switch (this->state) {
     case AWAKE:
         if(millis() - ts >= SLEEP_TIME) {
             this->state = SLEEP;
-            // sleepScreen();
+            this->display->clear()
             set_sleep_mode(SLEEP_MODE_PWR_DOWN);
             sleep_enable();
             sleep_mode();  
 
             sleep_disable();
             this->state = AWAKE;
-            // old screen
+            
+            if(this->tempAllarm->getValue()) this->display->setText(DISPLAY_POSITION, "PROBLEM DETECTED");
+            else if(this->containerFull->getValue()) this->display->setText(DISPLAY_POSITION, "CONTAINER FULL");
+            else {
+                this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
+                this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
+            }
+            
             this->ts = millis();
         }
         //guarda la coda degli eventi (ci stanno dentro l'user sensor, i bottoni e il movimento del motore)

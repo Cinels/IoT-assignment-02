@@ -11,12 +11,6 @@
 
 TemperatureTask::TemperatureTask(int period) {
     Task::init(period);
-    this->state = OK;
-}
-
-void TemperatureTask::init(Flag* tempflag, Flag* fillflag) {
-    this->tempAllarm = tempAllarm;
-    this->containerFull = containerFull;
 }
 
 void TemperatureTask::setDevices(TempSensor* tempSensor, Led* greenLed, Led* redLed, Display* display, Door* door) {
@@ -27,8 +21,17 @@ void TemperatureTask::setDevices(TempSensor* tempSensor, Led* greenLed, Led* red
     this->door = door;
 }
 
+void TemperatureTask::init(Flag* tempflag, Flag* fillflag) {
+    this->tempAllarm = tempAllarm;
+    this->containerFull = containerFull;
+    this->state = OK;
+}
+
 void TemperatureTask::tick() {
-    Serial.println("TEMPERATURE TASK");
+    Serial.print("TEMPERATURE State: ");
+    Serial.print(this->state);
+    Serial.print("\tTemp: ");
+    Serial.println(this->tempSensor->getTemperature());
     switch(this->state) {
     case OK:
         if (this->tempSensor->getTemperature() > MAX_TEMP) {
