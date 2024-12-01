@@ -10,12 +10,6 @@
 
 FillingTask::FillingTask(int period) {
     Task::init(period);
-    this->state = AVAILABLE;
-}
-
-void FillingTask::init(Flag* tempflag, Flag* fillflag) {
-    this->tempAllarm = tempAllarm;
-    this->containerFull = containerFull;
 }
 
 void FillingTask::setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* redLed, Display* display, Door* door) {
@@ -26,8 +20,21 @@ void FillingTask::setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* r
     this->door = door;
 }
 
+void FillingTask::init(Flag* tempflag, Flag* fillflag) {
+    this->tempAllarm = tempAllarm;
+    this->containerFull = containerFull;
+    this->state = AVAILABLE;
+}
+
 void FillingTask::tick() {
-    Serial.println("FILLING TASK");
+    Serial.print("FILLING State: ");
+    Serial.print(this->state);
+    Serial.print("\tFilling: ");
+    Serial.print(this->wasteDetector->getFilling());
+    Serial.print(" >= ");
+    Serial.print(CONTAINER_FULL);
+    Serial.print(" -> ");
+    Serial.println(this->wasteDetector->getFilling() >= CONTAINER_FULL ? "True" : "False");
     switch (this->state) {
     case AVAILABLE:
         if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
