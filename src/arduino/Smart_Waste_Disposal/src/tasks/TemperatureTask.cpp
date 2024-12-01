@@ -24,13 +24,13 @@ void TemperatureTask::setDevices(TempSensor* tempSensor, Led* greenLed, Led* red
 }
 
 void TemperatureTask::tick() {
-    Serial.print("FLAG: ");
-    Serial.println(this->flag->getValue());
+    // Serial.print("FLAG: ");
+    // Serial.println(this->flag->getValue());
         
-    Serial.print("TEMPERATURE State: ");
-    Serial.print(this->state);
-    Serial.print("\tTemp: ");
-    Serial.println(this->tempSensor->getTemperature());
+    // Serial.print("TEMPERATURE State: ");
+    // Serial.print(this->state);
+    // Serial.print("\tTemp: ");
+    // Serial.println(this->tempSensor->getTemperature());
     switch(this->state) {
     case OK:
         if (this->tempSensor->getTemperature() > MAX_TEMP) {

@@ -31,8 +31,8 @@ void ContainerTask::setDevices(Button* openButton, Button* closeButton, Led* gre
 }
 
 void ContainerTask::tick() {
-    Serial.print("FLAG: ");
-    Serial.println(this->flag->getValue());
+    // Serial.print("FLAG: ");
+    // Serial.println(this->flag->getValue());
     
     switch (this->state) {
     case AWAKE:

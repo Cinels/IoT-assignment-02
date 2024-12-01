@@ -3,7 +3,7 @@
 
 #include "Task.hpp"
 
-#define MAX_TASKS 3
+#define MAX_TASKS 4
 
 class Scheduler {
   

@@ -13,11 +13,13 @@
 #include "tasks/ContainerTask.hpp"
 #include "tasks/FillingTask.hpp"
 #include "tasks/TemperatureTask.hpp"
+#include "tasks/CommunicationTask.hpp"
 
 #define SCHEDULER_BASE_TIME 100
 #define TEMPERATURE_TASK_BASE_TIME 2500
 #define FILLING_TASK_BASE_TIME 2500
 #define CONTAINER_TASK_BASE_TIME 2500
+#define COMMUNICATION_TASK_BASE_TIME 2500
 
 #define CLOSE_BUTTON_PIN 3
 #define OPEN_BUTTON_PIN 2
@@ -61,20 +63,25 @@ void setup() {
   TemperatureTask* temperatureTask = new TemperatureTask(TEMPERATURE_TASK_BASE_TIME);
   FillingTask* fillingTask = new FillingTask(FILLING_TASK_BASE_TIME);
   ContainerTask* containerTask = new ContainerTask(CONTAINER_TASK_BASE_TIME);
+  CommunicationTask* communicationTask = new CommunicationTask(COMMUNICATION_TASK_BASE_TIME);
 
   //initializing tasks
   temperatureTask->setDevices(tempSensor, greenLed, redLed, display, door);
   fillingTask->setDevices(wasteDetector, greenLed, redLed, display, door);
   containerTask->setDevices(openButton, closeButton, greenLed, redLed, display, door, userDetector);
+  communicationTask->setDevices(wasteDetector, tempSensor);
 
   temperatureTask->setFlag(flags);
   fillingTask->setFlag(flags);
   containerTask->setFlag(flags);
 
+  communicationTask->setTasks(fillingTask, temperatureTask);
+
   //starting tasks
   scheduler.addTask(temperatureTask);
   scheduler.addTask(fillingTask);
   scheduler.addTask(containerTask);
+  scheduler.addTask(communicationTask);
 }
 
 void loop() {

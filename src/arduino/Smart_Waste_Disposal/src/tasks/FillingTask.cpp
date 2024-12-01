@@ -23,18 +23,18 @@ void FillingTask::setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* r
 }
 
 void FillingTask::tick() {
-    Serial.print("FLAG: ");
-    Serial.println(this->flag->getValue());
+    // Serial.print("FLAG: ");
+    // Serial.println(this->flag->getValue());
     
-    Serial.print("FILLING State: ");
-    Serial.print(this->state);
-    Serial.print("\tFilling: ");
-    /*Serial.println(this->wasteDetector->getFilling());
-    /*/Serial.print(this->wasteDetector->getFilling());
-    Serial.print(" >= ");
-    Serial.print(CONTAINER_FULL);
-    Serial.print(" -> ");
-    Serial.println(this->wasteDetector->getFilling() >= CONTAINER_FULL ? "True" : "False");/**/
+    // Serial.print("FILLING State: ");
+    // Serial.print(this->state);
+    // Serial.print("\tFilling: ");
+    // /*Serial.println(this->wasteDetector->getFilling());
+    // /*/Serial.print(this->wasteDetector->getFilling());
+    // Serial.print(" >= ");
+    // Serial.print(CONTAINER_FULL);
+    // Serial.print(" -> ");
+    // Serial.println(this->wasteDetector->getFilling() >= CONTAINER_FULL ? "True" : "False");/**/
     switch (this->state) {
     case AVAILABLE:
         if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
