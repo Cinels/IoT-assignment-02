@@ -13,6 +13,11 @@ RESTORE = '2'
 UPDATE_TIME = 500	#milliseconds
 SAVE_TIME = 3		#seconds
 
+TEMPERATURE_ALLARM = 1.0
+FULL_ALLARM = 2.0
+TEMPERATURE__AND_FULL_ALLARM = 3.0
+
+
 history_img_path = "./src/pc/history.png"
 history_text_path = "./src/pc/history.txt"
 
@@ -52,6 +57,7 @@ temperatureLabel = Label(font=(50))
 fillingLabel.grid(column=0, row=1)
 temperatureLabel.grid(column=1, row=1)
 
+flag = 0.0
 filling = 0.0
 temperature = 25.0
 
@@ -68,11 +74,11 @@ def printData():
 	
 	fillingLabel.config(text=fillingStr)
 	temperatureLabel.config(text=tempStr)
-	if filling >= 100.0:
+	if flag == FULL_ALLARM or flag == TEMPERATURE__AND_FULL_ALLARM or filling >= 100.0:
 		fillingLabel.config(fg='red')
 	else:
 		fillingLabel.config(fg='black')
-	if temperature >= 50.0:
+	if flag == TEMPERATURE_ALLARM or flag == TEMPERATURE__AND_FULL_ALLARM or temperature >= 50.0:
 		temperatureLabel.config(fg='red')
 	else:
 		temperatureLabel.config(fg='black')
@@ -93,14 +99,16 @@ def updateImage():
 
 # unpack singularly filling and temperature values
 def unpackData(values):
+	global flag
 	global filling
 	global temperature
 	rawValues = values.replace("'", "").replace("b", "").replace("\\r\\n", "").split(" ")
 	floatValues = [float(x) for x in rawValues if x.isnumeric() or x.replace('.', '', 1).isnumeric()]
 	
-	if len(floatValues) == 2:
-		filling = floatValues[0]
-		temperature = floatValues[1]
+	if len(floatValues) == 3:
+		flag = floatValues[0]
+		filling = floatValues[1]
+		temperature = floatValues[2]
 
 # calls periodically the functions to print values and graph
 def updateData():
@@ -140,7 +148,7 @@ def generateGraph():
 		plt.plot(timeArray, tempArray, 'r', label='Temperature')
 		plt.plot(timeArray, maxFill, 'paleturquoise', label='Max Filling', linewidth=0.5)
 		plt.plot(timeArray, maxTemp, 'salmon', label='Max Temperature', linewidth=0.5)
-		plt.ylim(ymin=0, ymax=110)
+		plt.ylim(ymin=0)
 		plt.xlabel("minutes")
 		plt.legend(loc="upper left")
 		plt.locator_params(axis='x', nbins=10)

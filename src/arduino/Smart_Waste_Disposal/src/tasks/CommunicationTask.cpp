@@ -9,6 +9,10 @@ CommunicationTask::CommunicationTask(int period) {
     Task::init(period);
 }
 
+void CommunicationTask::setFlag(Flag* flag) {
+    this->flag = flag;
+}
+
 void CommunicationTask::setDevices(WasteDetector* wasteDetector, TempSensor* tempSensor) {
     this->wasteDetector = wasteDetector;
     this->tempSensor = tempSensor;
@@ -24,6 +28,8 @@ void CommunicationTask::tick() {
         int message = Serial.readString().toInt();
         switch (message) {
         case GET_DATA:
+            Serial.print(this->flag->getValue());
+            Serial.print(" ");
             Serial.print(this->wasteDetector->getFilling());
             Serial.print(" ");
             Serial.print(this->tempSensor->getTemperature());

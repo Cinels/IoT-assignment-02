@@ -10,15 +10,15 @@ void setInterrupt(uint8_t pin, void (*func)(), uint8_t mode) {
 
 // __attribute__((unused))
 void userDetected() {
-    Serial.println("DETECTED!");
+    // Serial.println("DETECTED!");
 }
 
 // __attribute__((unused))
 void openButtonPressed() {
-    Serial.println("OPEN!");
+    // Serial.println("OPEN!");
 }
 
 // __attribute__((unused))
 void closeButtonPressed() {
-    Serial.println("CLOSE!");
+    // Serial.println("CLOSE!");
 }

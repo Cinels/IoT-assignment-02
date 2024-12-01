@@ -19,7 +19,7 @@
 #define TEMPERATURE_TASK_BASE_TIME 2500
 #define FILLING_TASK_BASE_TIME 2500
 #define CONTAINER_TASK_BASE_TIME 2500
-#define COMMUNICATION_TASK_BASE_TIME 2500
+#define COMMUNICATION_TASK_BASE_TIME 500
 
 #define CLOSE_BUTTON_PIN 3
 #define OPEN_BUTTON_PIN 2
@@ -74,6 +74,7 @@ void setup() {
   temperatureTask->setFlag(flags);
   fillingTask->setFlag(flags);
   containerTask->setFlag(flags);
+  communicationTask->setFlag(flags);
 
   communicationTask->setTasks(fillingTask, temperatureTask);
 
