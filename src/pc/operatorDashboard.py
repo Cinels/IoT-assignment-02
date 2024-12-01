@@ -4,7 +4,6 @@ import time
 from tkinter import *
 from PIL import Image, ImageTk, ImageFile
 import matplotlib.pyplot as plt
-import numpy as np
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 GET_DATA = '0'
@@ -39,8 +38,9 @@ root.lift()
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(0, weight=1)
-root.rowconfigure(1, weight=5)
-root.rowconfigure(2, weight=1)
+root.rowconfigure(1, weight=2)
+root.rowconfigure(2, weight=3)
+root.rowconfigure(2, weight=2)
 root.resizable(False, False)
 
 # clears history file
@@ -48,11 +48,13 @@ with open(history_text_path, 'w') as f:
 	pass
 # f.close()
 
+titleLabel = Label(text='OPERATOR DASHBOARD', font=(30))
+titleLabel.grid(column=0, row=0, columnspan=2)
 
-fillingLabel = Label()
-temperatureLabel = Label()
-fillingLabel.grid(column=0, row=0)
-temperatureLabel.grid(column=1, row=0)
+fillingLabel = Label(font=(50))
+temperatureLabel = Label(font=(50))
+fillingLabel.grid(column=0, row=1)
+temperatureLabel.grid(column=1, row=1)
 
 filling = 0.0
 temperature = 25.0
@@ -66,9 +68,17 @@ def printData():
 	
 	fillingLabel.config(text=fillingStr)
 	temperatureLabel.config(text=tempStr)
+	if filling >= 100.0:
+		fillingLabel.config(fg='red')
+	else:
+		fillingLabel.config(fg='black')
+	if temperature >= 50.0:
+		temperatureLabel.config(fg='red')
+	else:
+		temperatureLabel.config(fg='black')
 
 image_label = Label(root)
-image_label.grid(column=0, row=1, columnspan=2)	
+image_label.grid(column=0, row=2, columnspan=2)	
 
 # prints current history graph
 def updateImage():
@@ -113,10 +123,10 @@ def restore():
 	serialSendIntruction(RESTORE)
 
 emptyButton = Button(text='Empty', command=empty, background='lightGray')
-emptyButton.grid(column=0, row=2)
+emptyButton.grid(column=0, row=3)
 
 restoreButton = Button(text='Restore', command=restore, background='lightGray')
-restoreButton.grid(column=1, row=2)
+restoreButton.grid(column=1, row=3)
 
 #-----------History_management-------------
 
