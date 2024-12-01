@@ -41,7 +41,7 @@ void ContainerTask::tick() {
     case AWAKE:
         if(millis() - ts >= SLEEP_TIME) {
             this->state = SLEEP;
-            this->display->clear()
+            this->display->clear();
             set_sleep_mode(SLEEP_MODE_PWR_DOWN);
             sleep_enable();
             sleep_mode();  
