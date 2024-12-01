@@ -2,9 +2,6 @@
 #include <Arduino.h>
 #include <avr/sleep.h>
 
-#define DISPLAY_POSITION 0, 1
-#define DISPLAY_POSITION_2 0, 2
-
 #define SLEEP_TIME 15000
 #define OPEN_TIME 15000
 #define CLOSE_TIME 2000

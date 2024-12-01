@@ -4,9 +4,6 @@
 #define MAX_TEMP 50
 #define ALERT_TIME 5000
 
-#define DISPLAY_POSITION 0, 1
-#define DISPLAY_POSITION_2 0, 2
-
 #define RESTORING_TIME 10
 
 TemperatureTask::TemperatureTask(int period) {
