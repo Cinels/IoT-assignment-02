@@ -53,7 +53,10 @@ void ContainerTask::tick() {
         break;
     case OPEN:
         //guarda la coda
-        if(millis() - ts >= OPEN_TIME) {
+        if(this->tempAllarm->getValue() || this->containerFull->getValue()) {
+            this->state = AWAKE;
+            this->ts = millis();
+        } else if(millis() - ts >= OPEN_TIME) {
             this->state = CLOSE;
             this->door->close();
             this->display->setText(DISPLAY_POSITION, "WASTE RECEIVED");
