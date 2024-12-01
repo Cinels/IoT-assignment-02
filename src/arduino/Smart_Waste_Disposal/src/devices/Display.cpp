@@ -6,18 +6,18 @@ Display::Display() {
 }
 
 void Display::init() {
-    lcd->init();
-    lcd->clear();
-    lcd->noBacklight();
+    this->lcd->init();
+    this->lcd->clear();
+    this->lcd->noBacklight();
 }
 
 void Display::setText(int row, int col, String text) {
-    lcd->backlight();
-    lcd->setCursor(row, col);
-    lcd->print(text);
+    this->lcd->backlight();
+    this->lcd->setCursor(row, col);
+    this->lcd->print(text);
 }
 
 void Display::clear() {
-    lcd->clear();
-    lcd->noBacklight();
+    this->lcd->clear();
+    this->lcd->noBacklight();
 }

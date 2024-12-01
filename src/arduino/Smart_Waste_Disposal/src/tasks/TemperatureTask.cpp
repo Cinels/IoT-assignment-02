@@ -4,9 +4,6 @@
 #define MAX_TEMP 50
 #define ALERT_TIME 5000
 
-#define DISPLAY_POSITION 0, 1
-#define DISPLAY_POSITION_2 0, 2
-
 #define RESTORING_TIME 10
 
 TemperatureTask::TemperatureTask(int period) {
@@ -27,7 +24,10 @@ void TemperatureTask::setDevices(TempSensor* tempSensor, Led* greenLed, Led* red
 }
 
 void TemperatureTask::tick() {
-    Serial.println("TEMPERATURE TASK");
+    Serial.print("TEMPERATURE State: ");
+    Serial.print(this->state);
+    Serial.print("\tTemp: ");
+    Serial.println(this->tempSensor->getTemperature());
     switch(this->state) {
     case OK:
         if (this->tempSensor->getTemperature() > MAX_TEMP) {
