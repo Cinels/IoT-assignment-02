@@ -15,16 +15,16 @@
 #include "tasks/TemperatureTask.hpp"
 
 #define SCHEDULER_BASE_TIME 100
-#define TEMPERATURE_TASK_BASE_TIME 500
-#define FILLING_TASK_BASE_TIME 500
-#define CONTAINER_TASK_BASE_TIME 500
+#define TEMPERATURE_TASK_BASE_TIME 2500
+#define FILLING_TASK_BASE_TIME 2500
+#define CONTAINER_TASK_BASE_TIME 2500
 
 #define CLOSE_BUTTON_PIN 3
 #define OPEN_BUTTON_PIN 2
 #define DOOR_PIN 11
 #define GREEN_LED_PIN 13
 #define RED_LED_PIN 12
-#define TEMPERATURE_SENSOR_PIN A1
+#define TEMPERATURE_SENSOR_PIN A0
 #define USER_DETECTOR_PIN 8
 #define WASTE_DETECTOR_TRIGGER_PIN 5
 #define WASTE_DETECTOR_ECHO_PIN 6
@@ -50,10 +50,12 @@ void setup() {
   WasteDetector* wasteDetector = new WasteDetector(WASTE_DETECTOR_TRIGGER_PIN, WASTE_DETECTOR_ECHO_PIN);
 
   //initializing devices
+  display->init();
+  display->setText(DISPLAY_POSITION, "INITIALIZING");
   openButton->init(OPEN_BUTTON);
   closeButton->init(CLOSE_BUTTON);
-  display->init();
   userDetector->init();
+  display->clear();
 
   //creating tasks
   TemperatureTask* temperatureTask = new TemperatureTask(TEMPERATURE_TASK_BASE_TIME);

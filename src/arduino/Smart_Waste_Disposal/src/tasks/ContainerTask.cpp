@@ -24,10 +24,16 @@ void ContainerTask::setDevices(Button* openButton, Button* closeButton, Led* gre
     this->display = display;
     this->door = door;
     this->userDetector = userDetector;
+
+    greenLed->switchOn();
+    this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
+    this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
 }
 
 void ContainerTask::tick() {
-    Serial.println("CONTAINER TASK");
+    Serial.print("FLAG: ");
+    Serial.println(this->flag->getValue());
+    
     switch (this->state) {
     case AWAKE:
         if(millis() - ts >= SLEEP_TIME) {
@@ -39,7 +45,15 @@ void ContainerTask::tick() {
 
             sleep_disable();
             this->state = AWAKE;
-            // old screen
+            this->display->clear();
+            if(this->flag->getValue() == NONE) {
+                this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
+                this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
+            } else if(this->flag->getValue() == FULL_ALLARM) {
+                this->display->setText(DISPLAY_POSITION, "CONTAINER FULL");
+            } else {
+                this->display->setText(DISPLAY_POSITION, "PROBLEM DETECTED");
+            }
             this->ts = millis();
         }
         //guarda la coda degli eventi (ci stanno dentro l'user sensor, i bottoni e il movimento del motore)
@@ -56,6 +70,7 @@ void ContainerTask::tick() {
         if(millis() - ts >= OPEN_TIME) {
             this->state = CLOSE;
             this->door->close();
+            this->display->clear();
             this->display->setText(DISPLAY_POSITION, "WASTE RECEIVED");
             this->ts = millis();
         }
@@ -64,6 +79,7 @@ void ContainerTask::tick() {
         if(millis() - ts >= CLOSE_TIME) {
             this->state = AWAKE;
             if(this->flag->getValue() == NONE) {
+                this->display->clear();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
             }

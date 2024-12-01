@@ -29,11 +29,12 @@ void FillingTask::tick() {
     Serial.print("FILLING State: ");
     Serial.print(this->state);
     Serial.print("\tFilling: ");
-    Serial.println(this->wasteDetector->getFilling());
-    /*Serial.print(" >= ");
+    /*Serial.println(this->wasteDetector->getFilling());
+    /*/Serial.print(this->wasteDetector->getFilling());
+    Serial.print(" >= ");
     Serial.print(CONTAINER_FULL);
     Serial.print(" -> ");
-    Serial.println(this->wasteDetector->getFilling() >= CONTAINER_FULL ? "True" : "False");*/
+    Serial.println(this->wasteDetector->getFilling() >= CONTAINER_FULL ? "True" : "False");/**/
     switch (this->state) {
     case AVAILABLE:
         if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
@@ -41,6 +42,7 @@ void FillingTask::tick() {
             if(this->flag->getValue() == TEMPERATURE_ALLARM) this->flag->setValue(TEMPERATURE_AND_FULL_ALLARM);
             else {
                 this->flag->setValue(FULL_ALLARM);
+                this->display->clear();
                 this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
             }
             this->greenLed->switchOff();
@@ -56,6 +58,7 @@ void FillingTask::tick() {
                 this->flag->setValue(NONE);
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
+                this->display->clear();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
             }

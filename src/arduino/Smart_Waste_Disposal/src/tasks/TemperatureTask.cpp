@@ -24,6 +24,9 @@ void TemperatureTask::setDevices(TempSensor* tempSensor, Led* greenLed, Led* red
 }
 
 void TemperatureTask::tick() {
+    Serial.print("FLAG: ");
+    Serial.println(this->flag->getValue());
+        
     Serial.print("TEMPERATURE State: ");
     Serial.print(this->state);
     Serial.print("\tTemp: ");
@@ -42,6 +45,7 @@ void TemperatureTask::tick() {
             else this->flag->setValue(TEMPERATURE_ALLARM);
             this->greenLed->switchOff();
             this->redLed->switchOn();
+            this->display->clear();
             this->display->setText(DISPLAY_POSITION, "PROBLEM DETECTED");
             this->door->close();
         } else if(this->tempSensor->getTemperature() <= MAX_TEMP) {
@@ -51,6 +55,7 @@ void TemperatureTask::tick() {
     case RESTORING:
         if(millis() - ts >= RESTORING_TIME) {
             this->state = OK;
+            this->display->clear();
             if(this->flag->getValue() == TEMPERATURE_AND_FULL_ALLARM) {
                 this->flag->setValue(FULL_ALLARM);
                 this->display->setText(DISPLAY_POSITION, "CONTAINER FULL");
