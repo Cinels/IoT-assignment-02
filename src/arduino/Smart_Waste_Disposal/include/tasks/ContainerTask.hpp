@@ -17,8 +17,7 @@ typedef enum containerState {SLEEP, AWAKE, OPEN, CLOSE} containerState;
 class ContainerTask : public Task {
 private:
     containerState state;
-    Flag* tempAllarm;
-    Flag* containerFull;
+    Flag* flag;
     Button* openButton;
     Button* closeButton;
     Led* greenLed;
@@ -29,7 +28,7 @@ private:
     long ts;
 public:
     ContainerTask(int period);
-    void init(Flag* tempflag, Flag* fillflag);
+    void setFlag(Flag* flag);
     void setDevices(Button* openButton, Button* closeButton, Led* greenLed, Led* redLed, Display* display, Door* door, UserDetector* userDetector);
     void tick();
 };

@@ -36,8 +36,7 @@ void setup() {
   scheduler.init(SCHEDULER_BASE_TIME);
   
   //creating flags
-  Flag* tempAllarm = new Flag();
-  Flag* containerFull = new Flag();
+  Flag* flags = new Flag();
 
   //creating devices
   Button* openButton = new Button(OPEN_BUTTON_PIN);
@@ -62,13 +61,13 @@ void setup() {
   ContainerTask* containerTask = new ContainerTask(CONTAINER_TASK_BASE_TIME);
 
   //initializing tasks
-  temperatureTask->init(tempAllarm, containerFull);
-  fillingTask->init(tempAllarm, containerFull);
-  containerTask->init(tempAllarm, containerFull);
-
   temperatureTask->setDevices(tempSensor, greenLed, redLed, display, door);
   fillingTask->setDevices(wasteDetector, greenLed, redLed, display, door);
   containerTask->setDevices(openButton, closeButton, greenLed, redLed, display, door, userDetector);
+
+  temperatureTask->setFlag(flags);
+  fillingTask->setFlag(flags);
+  containerTask->setFlag(flags);
 
   //starting tasks
   scheduler.addTask(temperatureTask);

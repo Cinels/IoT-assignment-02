@@ -13,9 +13,8 @@ FillingTask::FillingTask(int period) {
     this->state = AVAILABLE;
 }
 
-void FillingTask::init(Flag* tempflag, Flag* fillflag) {
-    this->tempAllarm = tempAllarm;
-    this->containerFull = containerFull;
+void FillingTask::setFlag(Flag* flag) {
+    this->flag = flag;
 }
 
 void FillingTask::setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* redLed, Display* display, Door* door) {
@@ -30,19 +29,24 @@ void FillingTask::tick() {
     Serial.println("FILLING TASK");
     switch (this->state) {
     case AVAILABLE:
-        if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
+        if (this->wasteDetector->getFilling() >= FULL) {
             this->state = FULL;
-            this->containerFull->setValue(true);
+            if(this->flag->getValue() == TEMPERATURE_ALLARM) this->flag->setValue(TEMPERATURE_AND_FULL_ALLARM);
+            else {
+                this->flag->setValue(FULL_ALLARM);
+                this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
+            }
             this->greenLed->switchOff();
             this->redLed->switchOn();
-            if(!this->tempAllarm->getValue()) this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
             this->door->close();
         }
         break;
     case EMPTING:
         if(millis() - ts >= EMPTY_TIME) {
             this->state = AVAILABLE;
-            if(!this->tempAllarm->getValue()) {
+                if(this->flag->getValue() == TEMPERATURE_AND_FULL_ALLARM) this->flag->setValue(TEMPERATURE_ALLARM);
+            else {
+                this->flag->setValue(NONE);
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");

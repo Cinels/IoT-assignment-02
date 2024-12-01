@@ -5,7 +5,7 @@
 #define DISPLAY_POSITION 0, 1
 #define DISPLAY_POSITION_2 0, 2
 
-#define SLEEP_TIME 15000
+#define SLEEP_TIME 30000
 #define OPEN_TIME 15000
 #define CLOSE_TIME 2000
 
@@ -15,9 +15,8 @@ ContainerTask::ContainerTask(int period) {
     this->ts = millis();
 }
 
-void ContainerTask::init(Flag* tempflag, Flag* fillflag) {
-    this->tempAllarm = tempAllarm;
-    this->containerFull = containerFull;
+void ContainerTask::setFlag(Flag* flag) {
+    this->flag = flag;
 }
 
 void ContainerTask::setDevices(Button* openButton, Button* closeButton, Led* greenLed, Led* redLed, Display* display, Door* door, UserDetector* userDetector) {
@@ -36,7 +35,7 @@ void ContainerTask::tick() {
     case AWAKE:
         if(millis() - ts >= SLEEP_TIME) {
             this->state = SLEEP;
-            // sleepScreen();
+            this->display->clear();
             set_sleep_mode(SLEEP_MODE_PWR_DOWN);
             sleep_enable();
             sleep_mode();  
@@ -53,6 +52,10 @@ void ContainerTask::tick() {
         break;
     case OPEN:
         //guarda la coda
+        if(this->flag->getValue() != NONE) {
+            this->state = AWAKE;
+            this->ts = millis();
+        }
         if(millis() - ts >= OPEN_TIME) {
             this->state = CLOSE;
             this->door->close();
@@ -63,7 +66,7 @@ void ContainerTask::tick() {
     case CLOSE:
         if(millis() - ts >= CLOSE_TIME) {
             this->state = AWAKE;
-            if(!this->tempAllarm->getValue() && !this->containerFull->getValue()) {
+            if(this->flag->getValue() == NONE) {
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
             }

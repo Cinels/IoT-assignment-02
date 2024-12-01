@@ -15,8 +15,7 @@ typedef enum temperatureState {OK, ALERT, ALLARM, RESTORING} temperatureState;
 class TemperatureTask : public Task {
 private:
     temperatureState state;
-    Flag* tempAllarm;
-    Flag* containerFull;
+    Flag* flag;
     TempSensor* tempSensor;
     Led* greenLed;
     Led* redLed;
@@ -25,7 +24,7 @@ private:
     long ts;
 public:
     TemperatureTask(int period);
-    void init(Flag* tempflag, Flag* fillflag);
+    void setFlag(Flag* flag);
     void setDevices(TempSensor* tempSensor, Led* greenLed, Led* redLed, Display* display, Door* door);
     void tick();
     void restore();

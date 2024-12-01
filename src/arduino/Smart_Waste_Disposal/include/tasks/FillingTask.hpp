@@ -15,8 +15,7 @@ typedef enum fillingState {AVAILABLE, FULL, EMPTING} fillingState;
 class FillingTask : public Task {
 private:
     fillingState state;
-    Flag* tempAllarm;
-    Flag* containerFull;
+    Flag* flag;
     WasteDetector* wasteDetector;
     Led* greenLed;
     Led* redLed;
@@ -25,7 +24,7 @@ private:
     long ts;
 public:
     FillingTask(int period);
-    void init(Flag* tempflag, Flag* fillflag);
+    void setFlag(Flag* flag);
     void setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* redLed, Display* display, Door* door);
     void tick();
     void empty();
