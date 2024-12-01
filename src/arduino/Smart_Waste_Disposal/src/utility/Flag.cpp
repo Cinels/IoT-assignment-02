@@ -1,13 +1,13 @@
 #include "utility/Flag.hpp"
 
 Flag::Flag() {
-    this->flag = false;
+    this->flag = NONE;
 }
 
-bool Flag::getValue() {
+containerFlag Flag::getValue() {
     return this->flag;
 }
 
-void Flag::setValue(bool value) {
+void Flag::setValue(containerFlag value) {
     this->flag = value;
 }
