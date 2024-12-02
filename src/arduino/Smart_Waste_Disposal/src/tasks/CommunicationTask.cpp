@@ -3,7 +3,9 @@
 
 #define GET_DATA 0
 #define EMPTY 1
+#define EMPTY_GET 10
 #define RESTORE 2
+#define RESTORE_GET 20
 
 CommunicationTask::CommunicationTask(int period) {
     Task::init(period);
@@ -30,15 +32,18 @@ void CommunicationTask::tick() {
             Serial.print(this->tempSensor->getTemperature());
             Serial.println(" ");
             break;
-        case EMPTY: 
+        case EMPTY:
+        case EMPTY_GET:
             if(this->flag->getInstruction() == NO_INSTRUCTION) this->flag->setInstruction(EMPTY_INSTRUCTION);
             else this->flag->setInstruction(EMPTY_AND_RESTORE_INSTRUCTION);
             break;
         case RESTORE:
+        case RESTORE_GET:
             if(this->flag->getInstruction() == NO_INSTRUCTION) this->flag->setInstruction(RESTORE_INSTRUCTION);
             else this->flag->setInstruction(EMPTY_AND_RESTORE_INSTRUCTION);
             break;
-        default: break;
+        default: 
+            break;
         }
     }
 }
