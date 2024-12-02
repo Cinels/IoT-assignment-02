@@ -18,11 +18,6 @@ void CommunicationTask::setDevices(WasteDetector* wasteDetector, TempSensor* tem
     this->tempSensor = tempSensor;
 }
 
-void CommunicationTask::setTasks(FillingTask* fillingTask, TemperatureTask* temperatureTask) {
-    this->fillingTask = fillingTask;
-    this->temperatureTask = temperatureTask;
-}
-
 void CommunicationTask::tick() {
     if(Serial.available()) {
         int message = Serial.readString().toInt();
@@ -35,8 +30,14 @@ void CommunicationTask::tick() {
             Serial.print(this->tempSensor->getTemperature());
             Serial.println(" ");
             break;
-        case EMPTY: this->fillingTask->empty(); break;
-        case RESTORE: this->temperatureTask->restore(); break;
+        case EMPTY: 
+            if(this->flag->getInstruction() == NO_INSTRUCTION) this->flag->setInstruction(EMPTY_INSTRUCTION);
+            else this->flag->setInstruction(EMPTY_AND_RESTORE_INSTRUCTION);
+            break;
+        case RESTORE:
+            if(this->flag->getInstruction() == NO_INSTRUCTION) this->flag->setInstruction(RESTORE_INSTRUCTION);
+            else this->flag->setInstruction(EMPTY_AND_RESTORE_INSTRUCTION);
+            break;
         default: break;
         }
     }

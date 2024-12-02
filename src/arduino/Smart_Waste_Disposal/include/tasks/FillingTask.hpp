@@ -27,7 +27,6 @@ public:
     void setFlag(Flag* flag);
     void setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* redLed, Display* display, Door* door);
     void tick();
-    void empty();
 };
 
 #endif

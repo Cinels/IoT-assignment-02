@@ -52,6 +52,15 @@ void TemperatureTask::tick() {
             this->state = OK;
         } 
         break;
+    case ALLARM:
+        if (this->flag->getInstruction() == RESTORE_INSTRUCTION || this->flag->getInstruction() == EMPTY_AND_RESTORE_INSTRUCTION) {
+            if(this->flag->getInstruction() == RESTORE_INSTRUCTION) this->flag->setInstruction(NO_INSTRUCTION);
+            else this->flag->setInstruction(EMPTY_INSTRUCTION);
+            this->state = RESTORING;
+            this->door->open();
+            this->ts = millis();
+        }
+        break;
     case RESTORING:
         if(millis() - ts >= RESTORING_TIME) {
             this->state = OK;
@@ -70,13 +79,5 @@ void TemperatureTask::tick() {
         }
         break;
     default: break;
-    }
-}
-
-void TemperatureTask::restore() {
-    if (this->state == ALLARM) {
-        this->state = RESTORING;
-        this->door->open();
-        this->ts = millis();
     }
 }
