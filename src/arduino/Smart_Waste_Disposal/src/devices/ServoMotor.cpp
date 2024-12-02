@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-#define MOVING_TIME 100.0
+#define MOVING_TIME 70.0
 #define DEFAULT_POSITION 180
 
 ServoMotor::ServoMotor(int pin) {
