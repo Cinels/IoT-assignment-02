@@ -54,8 +54,6 @@ void setup() {
   //initializing devices
   display->init();
   display->setText(DISPLAY_POSITION, "INITIALIZING");
-  openButton->init(OPEN_BUTTON);
-  closeButton->init(CLOSE_BUTTON);
   userDetector->init();
   display->clear();
 
