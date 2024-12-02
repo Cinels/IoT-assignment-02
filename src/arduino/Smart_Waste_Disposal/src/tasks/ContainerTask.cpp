@@ -31,9 +31,6 @@ void ContainerTask::setDevices(Button* openButton, Button* closeButton, Led* gre
 }
 
 void ContainerTask::tick() {
-    // Serial.print("FLAG: ");
-    // Serial.println(this->flag->getValue());
-    
     switch (this->state) {
     case AWAKE:
         if(millis() - ts >= SLEEP_TIME) {
@@ -66,7 +63,6 @@ void ContainerTask::tick() {
         }
         break;
     case OPEN:
-        //guarda la coda e il close button
         if(this->flag->getAllarm() != NO_ALLARM) {
             this->state = AWAKE;
             this->ts = millis();
@@ -80,7 +76,6 @@ void ContainerTask::tick() {
         }
         break;
     case CLOSE:
-        //guarda la coda 
         if(millis() - ts >= CLOSE_TIME) {
             this->state = AWAKE;
             if(this->flag->getAllarm() == NO_ALLARM) {
