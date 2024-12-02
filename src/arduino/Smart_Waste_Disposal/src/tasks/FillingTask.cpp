@@ -50,6 +50,15 @@ void FillingTask::tick() {
             this->door->close();
         }
         break;
+    case FULL:
+        if(this->flag->getInstruction() == EMPTY_INSTRUCTION || this->flag->getInstruction() == EMPTY_AND_RESTORE_INSTRUCTION) {
+            if(this->flag->getInstruction() == EMPTY_INSTRUCTION) this->flag->setInstruction(NO_INSTRUCTION);
+            else this->flag->setInstruction(RESTORE_INSTRUCTION);
+            this->state = EMPTING;
+            this->door->open();
+            this->ts = millis();
+        }
+        break;
     case EMPTING:
         if(millis() - ts >= EMPTY_TIME) {
             this->state = AVAILABLE;
@@ -66,13 +75,5 @@ void FillingTask::tick() {
         }
         break;
     default: break;
-    }
-}
-
-void FillingTask::empty() {
-    if(this->state == FULL) {
-        this->state = EMPTING;
-        this->door->open();
-        this->ts = millis();
     }
 }

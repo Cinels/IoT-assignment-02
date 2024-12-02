@@ -76,8 +76,6 @@ void setup() {
   containerTask->setFlag(flags);
   communicationTask->setFlag(flags);
 
-  communicationTask->setTasks(fillingTask, temperatureTask);
-
   //starting tasks
   scheduler.addTask(temperatureTask);
   scheduler.addTask(fillingTask);

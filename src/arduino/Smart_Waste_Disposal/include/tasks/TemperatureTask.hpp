@@ -27,7 +27,6 @@ public:
     void setFlag(Flag* flag);
     void setDevices(TempSensor* tempSensor, Led* greenLed, Led* redLed, Display* display, Door* door);
     void tick();
-    void restore();
 };
 
 #endif

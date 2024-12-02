@@ -11,17 +11,12 @@
 class CommunicationTask : public Task {
 private:
     Flag* flag;
-
     WasteDetector* wasteDetector;
     TempSensor* tempSensor;
-
-    FillingTask* fillingTask;
-    TemperatureTask* temperatureTask;
 public:
     CommunicationTask(int period);
     void setFlag(Flag* flag);
     void setDevices(WasteDetector* wasteDetector, TempSensor* tempSensor);
-    void setTasks(FillingTask* fillingTask, TemperatureTask* temperatureTask);
     void tick();
 };
 
