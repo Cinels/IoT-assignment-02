@@ -6,6 +6,7 @@
 class UserDetector : public PIR {
 private:
     int pin;
+    static void userDetected();
 public:
     UserDetector(int pin);
     void init();

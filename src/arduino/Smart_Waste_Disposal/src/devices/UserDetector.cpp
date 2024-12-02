@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include "utility/interrupt_utils.hpp"
 #include "devices/UserDetector.hpp"
 
 #define CALIBRATING_TIME 10000
@@ -11,5 +10,7 @@ UserDetector::UserDetector(int pin) {
 
 void UserDetector::init() {
     delay(CALIBRATING_TIME);
-    setInterrupt(this->pin, userDetected, RISING);
+    attachInterrupt(digitalPinToInterrupt(this->pin), UserDetector::userDetected, CHANGE); 
 }
+
+void UserDetector::userDetected() {}
