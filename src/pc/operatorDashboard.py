@@ -10,11 +10,11 @@ GET_DATA = '0'
 EMPTY = '1'
 RESTORE = '2'
 
-UPDATE_TIME = 500	#milliseconds
+UPDATE_TIME = 1000	#milliseconds
 SAVE_TIME = 3		#seconds
 
-TEMPERATURE_ALLARM = 1.0
-FULL_ALLARM = 2.0
+FULL_ALLARM = 1.0
+TEMPERATURE_ALLARM = 2.0
 TEMPERATURE__AND_FULL_ALLARM = 3.0
 
 
@@ -30,7 +30,7 @@ def serialSendIntruction(x):
 
 def serialGetResult():
 	time.sleep(0.05) 
-	data = arduino.readline() 
+	data = arduino.readline()
 	return str(data)
 
 #-------------GUI_initializzaiton------------------
