@@ -3,7 +3,7 @@
 
 #define CONTAINER_FULL 100.0
 
-#define EMPTY_TIME 10
+#define EMPTY_TIME 10000
 
 FillingTask::FillingTask(int period) {
     Task::init(period);
@@ -23,18 +23,6 @@ void FillingTask::setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* r
 }
 
 void FillingTask::tick() {
-    // Serial.print("FLAG: ");
-    // Serial.println(this->flag->getValue());
-    
-    // Serial.print("FILLING State: ");
-    // Serial.print(this->state);
-    // Serial.print("\tFilling: ");
-    // /*Serial.println(this->wasteDetector->getFilling());
-    // /*/Serial.print(this->wasteDetector->getFilling());
-    // Serial.print(" >= ");
-    // Serial.print(CONTAINER_FULL);
-    // Serial.print(" -> ");
-    // Serial.println(this->wasteDetector->getFilling() >= CONTAINER_FULL ? "True" : "False");/**/
     switch (this->state) {
     case AVAILABLE:
         if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
@@ -60,9 +48,9 @@ void FillingTask::tick() {
         }
         break;
     case EMPTING:
-        if(millis() - ts >= EMPTY_TIME) {
+        if(millis() - this->ts >= EMPTY_TIME) {
             this->state = AVAILABLE;
-                if(this->flag->getAllarm() == TEMPERATURE_AND_FULL_ALLARM) this->flag->setAllarm(TEMPERATURE_ALLARM);
+            if(this->flag->getAllarm() == TEMPERATURE_AND_FULL_ALLARM) this->flag->setAllarm(TEMPERATURE_ALLARM);
             else {
                 this->flag->setAllarm(NO_ALLARM);
                 this->redLed->switchOff();
