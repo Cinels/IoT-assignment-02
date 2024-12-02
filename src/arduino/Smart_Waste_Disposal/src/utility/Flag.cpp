@@ -13,8 +13,8 @@ containerInstruction Flag::getInstruction() {
     return this->instruction;
 }
 
-void Flag::setAllarm(containerAllarm alarm) {
-    this->allarm= allarm;
+void Flag::setAllarm(containerAllarm allarm) {
+    this->allarm = allarm;
 }
 
 void Flag::setInstruction(containerInstruction instruction) {
