@@ -41,8 +41,8 @@ void TemperatureTask::tick() {
     case ALERT:
         if ((millis() - ts > ALERT_TIME) && (this->tempSensor->getTemperature() > MAX_TEMP)) {
             this->state = ALLARM;
-            if(this->flag->getValue() == FULL_ALLARM) this->flag->setValue(TEMPERATURE_AND_FULL_ALLARM);
-            else this->flag->setValue(TEMPERATURE_ALLARM);
+            if(this->flag->getAllarm() == FULL_ALLARM) this->flag->setAllarm(TEMPERATURE_AND_FULL_ALLARM);
+            else this->flag->setAllarm(TEMPERATURE_ALLARM);
             this->greenLed->switchOff();
             this->redLed->switchOn();
             this->display->clear();
@@ -56,11 +56,11 @@ void TemperatureTask::tick() {
         if(millis() - ts >= RESTORING_TIME) {
             this->state = OK;
             this->display->clear();
-            if(this->flag->getValue() == TEMPERATURE_AND_FULL_ALLARM) {
-                this->flag->setValue(FULL_ALLARM);
+            if(this->flag->getAllarm() == TEMPERATURE_AND_FULL_ALLARM) {
+                this->flag->setAllarm(FULL_ALLARM);
                 this->display->setText(DISPLAY_POSITION, "CONTAINER FULL");
             } else {
-                this->flag->setValue(NONE);
+                this->flag->setAllarm(NO_ALLARM);
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");

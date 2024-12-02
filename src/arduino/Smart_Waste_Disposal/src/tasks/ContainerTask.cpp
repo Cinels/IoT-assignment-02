@@ -46,10 +46,10 @@ void ContainerTask::tick() {
             sleep_disable();
             this->state = AWAKE;
             this->display->clear();
-            if(this->flag->getValue() == NONE) {
+            if(this->flag->getAllarm() == NO_ALLARM) {
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
-            } else if(this->flag->getValue() == FULL_ALLARM) {
+            } else if(this->flag->getAllarm() == FULL_ALLARM) {
                 this->display->setText(DISPLAY_POSITION, "CONTAINER FULL");
             } else {
                 this->display->setText(DISPLAY_POSITION, "PROBLEM DETECTED");
@@ -63,7 +63,7 @@ void ContainerTask::tick() {
         break;
     case OPEN:
         //guarda la coda
-        if(this->flag->getValue() != NONE) {
+        if(this->flag->getAllarm() != NO_ALLARM) {
             this->state = AWAKE;
             this->ts = millis();
         }
@@ -78,7 +78,7 @@ void ContainerTask::tick() {
     case CLOSE:
         if(millis() - ts >= CLOSE_TIME) {
             this->state = AWAKE;
-            if(this->flag->getValue() == NONE) {
+            if(this->flag->getAllarm() == NO_ALLARM) {
                 this->display->clear();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");

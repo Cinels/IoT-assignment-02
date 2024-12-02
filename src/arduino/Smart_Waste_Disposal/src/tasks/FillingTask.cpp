@@ -39,9 +39,9 @@ void FillingTask::tick() {
     case AVAILABLE:
         if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
             this->state = FULL;
-            if(this->flag->getValue() == TEMPERATURE_ALLARM) this->flag->setValue(TEMPERATURE_AND_FULL_ALLARM);
+            if(this->flag->getAllarm() == TEMPERATURE_ALLARM) this->flag->setAllarm(TEMPERATURE_AND_FULL_ALLARM);
             else {
-                this->flag->setValue(FULL_ALLARM);
+                this->flag->setAllarm(FULL_ALLARM);
                 this->display->clear();
                 this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
             }
@@ -53,9 +53,9 @@ void FillingTask::tick() {
     case EMPTING:
         if(millis() - ts >= EMPTY_TIME) {
             this->state = AVAILABLE;
-                if(this->flag->getValue() == TEMPERATURE_AND_FULL_ALLARM) this->flag->setValue(TEMPERATURE_ALLARM);
+                if(this->flag->getAllarm() == TEMPERATURE_AND_FULL_ALLARM) this->flag->setAllarm(TEMPERATURE_ALLARM);
             else {
-                this->flag->setValue(NONE);
+                this->flag->setAllarm(NO_ALLARM);
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
                 this->display->clear();
