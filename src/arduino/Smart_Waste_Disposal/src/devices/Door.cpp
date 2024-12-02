@@ -7,7 +7,6 @@
 
 Door::Door(int pin) {
     this->servoMotor = new ServoMotor(pin);
-    this->close();
 }
 
 void Door::open() {

@@ -2,26 +2,30 @@
 #include <Arduino.h>
 #include <Servo.h>
 
+#define MOVING_TIME 100.0
+#define DEFAULT_POSITION 180
+
 ServoMotor::ServoMotor(int pin) {
     this->pin = pin;
-    //this->motor = new Servo();
+    this->on();
+    delay(MOVING_TIME);
+    motor.write(DEFAULT_POSITION);
+    delay(MOVING_TIME);
+    this->off();
 }
 
 void ServoMotor::on(){
-  // Serial.println("on");
   motor.attach(this->pin);
 }
 
 void ServoMotor::setPosition(int angle){
   this->on();
-  // Serial.print("shold be in position ");
-  // Serial.println(angle);
+  delay(MOVING_TIME);
   motor.write(angle);
-  //devi lasciargli il tempo di muoversi -> voglio mettere una lista roba in coda
+  delay(MOVING_TIME);
   this->off();
 }
 
 void ServoMotor::off(){
-  // Serial.println("off");
   motor.detach();    
 }
