@@ -56,18 +56,22 @@ void ContainerTask::tick() {
             }
             this->ts = millis();
         }
-        //guarda la coda degli eventi (ci stanno dentro l'user sensor, i bottoni e il movimento del motore)
-        // dopo che hai aperto ↓
-        // this->display->setText(DISPLAY_POSITION, "PRESS CLOSE WHEN DONE");
-        // this->ts = millis();
+        if(this->openButton->isPressed() && this->flag->getAllarm() == NO_ALLARM) {
+            this->state = OPEN;
+            this->door->open();
+            this->display->clear();
+            this->display->setText(DISPLAY_POSITION, "PRESS CLOSE");
+            this->display->setText(DISPLAY_POSITION_2, "WHEN DONE");
+            this->ts = millis();
+        }
         break;
     case OPEN:
-        //guarda la coda
+        //guarda la coda e il close button
         if(this->flag->getAllarm() != NO_ALLARM) {
             this->state = AWAKE;
             this->ts = millis();
         }
-        if(millis() - ts >= OPEN_TIME) {
+        if(millis() - ts >= OPEN_TIME || this->closeButton->isPressed()) {
             this->state = CLOSE;
             this->door->close();
             this->display->clear();
@@ -76,6 +80,7 @@ void ContainerTask::tick() {
         }
         break;
     case CLOSE:
+        //guarda la coda 
         if(millis() - ts >= CLOSE_TIME) {
             this->state = AWAKE;
             if(this->flag->getAllarm() == NO_ALLARM) {
