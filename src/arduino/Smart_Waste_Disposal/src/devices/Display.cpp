@@ -1,5 +1,4 @@
 #include "devices/Display.hpp"
-// #include <LiquidCrystal_I2C.h>
 
 Display::Display() {
     this->lcd = new LiquidCrystal_I2C(0x27,20,4);
@@ -7,8 +6,7 @@ Display::Display() {
 
 void Display::init() {
     this->lcd->init();
-    this->lcd->clear();
-    this->lcd->noBacklight();
+    this->clear();
 }
 
 void Display::setText(int row, int col, String text) {
