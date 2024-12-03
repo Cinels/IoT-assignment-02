@@ -6,7 +6,7 @@ state OK
 
 state ALERT
 
-state ALLARM
+state ALARM
 
 state RESTORING
 
@@ -15,8 +15,8 @@ state RESTORING
 [*] -right-> OK
 OK -right-> ALERT
 ALERT -left-> OK
-ALERT -down-> ALLARM
-ALLARM -left-> RESTORING
+ALERT -down-> ALARM
+ALARM -left-> RESTORING
 RESTORING -up-> OK
 
 @enduml
