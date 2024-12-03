@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include "devices/WasteDetector.hpp"
 
+#define FULL 2.0
+#define EMPTY 11.0
+
 WasteDetector::WasteDetector(int trigPin, int echoPin) {
     this->trigPin = trigPin;
     this->echoPin = echoPin;
@@ -27,6 +30,6 @@ float WasteDetector::getDistance() {
 
 float WasteDetector::getFilling() {
     float d = this->getDistance();
-    long perc = map((long)(d*100), 11, 2, 0, 100);
+    long perc = map((long)(d*100), EMPTY, FULL, 0, 100);
     return (float)perc;
 }
