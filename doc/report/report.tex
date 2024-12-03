@@ -35,11 +35,12 @@
 
         \begin{figure}[H]
         	\centering{}
-        	\includegraphics[width=250pt]{img/Assignment-02_SWDS-Domain.png}
+        	\includegraphics[width=240pt]{img/Assignment-02_SWDS-Domain.png}
         	\caption{Smart Waste Disposal System}
         	\label{img:system}
         \end{figure}
-
+        \centerline{\href{https://docs.google.com/document/d/1iFXGmo7RVZMpJ5bxUN5ms_qFqg2B-wecRc0sfas9rQ4/edit?tab=t.0}{Here} is the complete description for the assignment.}
+            
     \section{Domain Model}
     
         The waste container will manage an user detector. If an user is detected, in case the system was asleep it would be awaken, otherwise kept awake. If for some time no one is detected the system will turn in \textit{sleep mode} in order to consume less energy.
@@ -55,27 +56,33 @@
         The operator dashboard let the operator to see the current data of the container's sensors, so the filling percentage and the temperature of the liquid inside. It offers also a button to empty the container, and a button to manage temperature problem inside the container.\\\\
         %
         The waste container and the operator dashboard have to communicate. More specifically the dashboard will read from the waste container sensors data and will send a signal to empty or restore the container. 
-
+            
     \section{Requirements}
 
-        \begin{itemize}
-            \item The system has to turn in \textit{sleep mode} if no user is detected for $T_
-            {sleep}$ seconds. 
-            \item The system has to wake up whenever an user is detected
-            \item When the user presses the ``Open" button the container's door opens to let him spill waste.
-            \item When the user presses the ``Close" button or $T_1$ seconds are elapsed from the opening of the container, the door will close. 
-            \item The filling sensor is constantly checking for the filling level of the container, sending it to the operator dashboard. 
-            \item Whenever the filling sensor detects that the container is full, it doesn't accept anymore waste until an operator empties it. If the door is open when the temperature exceeds his threshold it will immediately close. 
-            \item The temperature sensor constantly checks the waste temperature sending it to the operator dashboard. 
-            \item Whenever the temperature sensor detects a too high temperature in the liquid, the container doesn't accept anymore waste until the intervention of an operator. If the door is open when the temperature exceeds his threshold it will immediately close. 
-            \item The display has to show different messages depending on the container's state. 
-            \item When entering the spill is available it will be on the green led, while when is not available - in case of full container or waste with too high temperature - it will be on the red led.  
-            \item The operator dashboard displays the current state of the container, in particular the filling percentage and the waste temperature. 
-            \item An operator can empty the container through his dashboard pressing the button ``Empty the container". When the container has to emty the door will open for $T_3$ seconds. After emptying the container will be available for users. 
-            \item In case of high temperature in the waste the operator can restore the container by pressing the ``Restore" button in the operator dashboard, making the container available for users.  
-        \end{itemize}
-        
-    \centerline{\href{https://docs.google.com/document/d/1iFXGmo7RVZMpJ5bxUN5ms_qFqg2B-wecRc0sfas9rQ4/edit?tab=t.0}{Here} is the complete description for the assignment.}
+        \subsection{Mandatory:}
+
+            \begin{itemize}
+                \item The system has to turn in \textit{sleep mode} if no user is detected for $T_
+                {sleep}$ seconds. 
+                \item The system has to wake up whenever an user is detected
+                \item When the user presses the ``Open" button the container's door opens to let him spill waste.
+                \item When the user presses the ``Close" button or $T_1$ seconds are elapsed from the opening of the container, the door will close. 
+                \item The filling sensor is constantly checking for the filling level of the container, sending it to the operator dashboard. 
+                \item Whenever the filling sensor detects that the container is full, it doesn't accept anymore waste until an operator empties it. If the door is open when the temperature exceeds his threshold it will immediately close. 
+                \item The temperature sensor constantly checks the waste temperature sending it to the operator dashboard. 
+                \item Whenever the temperature sensor detects a too high temperature in the liquid, the container doesn't accept anymore waste until the intervention of an operator. If the door is open when the temperature exceeds his threshold it will immediately close. 
+                \item The display has to show different messages depending on the container's state. 
+                \item When entering the spill is available it will be on the green led, while when is not available - in case of full container or waste with too high temperature - it will be on the red led.  
+                \item The operator dashboard displays the current state of the container, in particular the filling percentage and the waste temperature. 
+                \item An operator can empty the container through his dashboard pressing the button ``Empty the container". When the container has to empty the door will open for $T_3$ seconds. After emptying the container will be available for users. 
+                \item In case of high temperature in the waste the operator can restore the container by pressing the ``Restore" button in the operator dashboard, making the container available for users.
+            \end{itemize}
+
+        \subsection{Optional:}
+            
+            \begin{itemize}
+                \item The operator dashboard can store data to make an history graph.
+            \end{itemize}
 
 \chapter{Design}
 
