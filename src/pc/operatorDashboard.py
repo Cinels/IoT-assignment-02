@@ -25,9 +25,11 @@ history_text_path = "./src/pc/history.txt"
 
 arduino = serial.Serial(port='COM4', baudrate=9600, timeout=.1)
 
+# writes in the serial line bytes 'x'
 def serialSendIntruction(x):
 	arduino.write(bytes(x, 'utf-8'))
 
+# reads a line from the serial line
 def serialGetResult():
 	time.sleep(0.05) 
 	data = arduino.readline()
