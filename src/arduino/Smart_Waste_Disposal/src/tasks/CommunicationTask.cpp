@@ -25,7 +25,7 @@ void CommunicationTask::tick() {
         int message = Serial.readString().toInt();
         switch (message) {
         case GET_DATA:
-            Serial.print(this->flag->getAllarm());
+            Serial.print(this->flag->getAlarm());
             Serial.print(" ");
             Serial.print(this->wasteDetector->getFilling());
             Serial.print(" ");

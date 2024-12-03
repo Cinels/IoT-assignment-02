@@ -11,7 +11,7 @@
 #include "devices/Door.hpp"
 
 /// @brief Enumeration to track the state of the task.
-typedef enum fillingState {AVAILABLE, FULL, EMPTING} fillingState;
+typedef enum fillingState {AVAILABLE, FULL, EMPTYING} fillingState;
 
 /// @brief Task to check the filling of an object.
 class FillingTask : public Task {
@@ -29,7 +29,7 @@ public:
     /// @param period the base period every which the task must be performed.
     FillingTask(int period);
     
-    /// @brief Sets the flag object which keeps trak of allarms and instruction to be communicated among theads.
+    /// @brief Sets the flag object which keeps trak of alarms and instruction to be communicated among theads.
     /// @param flag the flag to communicate among threads.
     void setFlag(Flag* flag);
     

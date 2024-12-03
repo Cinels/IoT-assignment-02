@@ -1,20 +1,20 @@
 #include "utility/Flag.hpp"
 
 Flag::Flag() {
-    this->allarm = NO_ALLARM;
+    this->alarm = NO_ALARM;
     this->instruction = NO_INSTRUCTION;
 }
 
-containerAllarm Flag::getAllarm() {
-    return this->allarm;
+containerAlarm Flag::getAlarm() {
+    return this->alarm;
 }
 
 containerInstruction Flag::getInstruction() {
     return this->instruction;
 }
 
-void Flag::setAllarm(containerAllarm allarm) {
-    this->allarm = allarm;
+void Flag::setAlarm(containerAlarm alarm) {
+    this->alarm = alarm;
 }
 
 void Flag::setInstruction(containerInstruction instruction) {

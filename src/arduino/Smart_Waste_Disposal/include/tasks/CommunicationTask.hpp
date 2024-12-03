@@ -20,7 +20,7 @@ public:
     /// @param period the base period every which the task must be performed.
     CommunicationTask(int period);
 
-    /// @brief Sets the flag object which keeps trak of allarms and instruction to be communicated among theads.
+    /// @brief Sets the flag object which keeps trak of alarms and instruction to be communicated among theads.
     /// @param flag the flag to communicate among threads.
     void setFlag(Flag* flag);
 
