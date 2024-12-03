@@ -43,17 +43,17 @@ void ContainerTask::tick() {
             sleep_disable();
             this->state = AWAKE;
             this->display->clear();
-            if(this->flag->getAllarm() == NO_ALLARM) {
+            if(this->flag->getAlarm() == NO_ALARM) {
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");
-            } else if(this->flag->getAllarm() == FULL_ALLARM) {
+            } else if(this->flag->getAlarm() == FULL_ALARM) {
                 this->display->setText(DISPLAY_POSITION, "CONTAINER FULL");
             } else {
                 this->display->setText(DISPLAY_POSITION, "PROBLEM DETECTED");
             }
             this->ts = millis();
         }
-        if(this->openButton->isPressed() && this->flag->getAllarm() == NO_ALLARM) {
+        if(this->openButton->isPressed() && this->flag->getAlarm() == NO_ALARM) {
             this->state = OPEN;
             this->door->open();
             this->display->clear();
@@ -63,7 +63,7 @@ void ContainerTask::tick() {
         }
         break;
     case OPEN:
-        if(this->flag->getAllarm() != NO_ALLARM) {
+        if(this->flag->getAlarm() != NO_ALARM) {
             this->state = AWAKE;
             this->ts = millis();
         }
@@ -78,7 +78,7 @@ void ContainerTask::tick() {
     case CLOSE:
         if(millis() - ts >= CLOSE_TIME) {
             this->state = AWAKE;
-            if(this->flag->getAllarm() == NO_ALLARM) {
+            if(this->flag->getAlarm() == NO_ALARM) {
                 this->display->clear();
                 this->display->setText(DISPLAY_POSITION, "PRESS OPEN TO");
                 this->display->setText(DISPLAY_POSITION_2, "ENTER WASTE");

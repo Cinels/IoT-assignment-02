@@ -27,9 +27,9 @@ void FillingTask::tick() {
     case AVAILABLE:
         if (this->wasteDetector->getFilling() >= CONTAINER_FULL) {
             this->state = FULL;
-            if(this->flag->getAllarm() == TEMPERATURE_ALLARM) this->flag->setAllarm(TEMPERATURE_AND_FULL_ALLARM);
+            if(this->flag->getAlarm() == TEMPERATURE_ALARM) this->flag->setAlarm(TEMPERATURE_AND_FULL_ALARM);
             else {
-                this->flag->setAllarm(FULL_ALLARM);
+                this->flag->setAlarm(FULL_ALARM);
                 this->display->clear();
                 this->display->setText(DISPLAY_POSITION,"CONTAINER FULL");
             }
@@ -42,17 +42,17 @@ void FillingTask::tick() {
         if(this->flag->getInstruction() == EMPTY_INSTRUCTION || this->flag->getInstruction() == EMPTY_AND_RESTORE_INSTRUCTION) {
             if(this->flag->getInstruction() == EMPTY_INSTRUCTION) this->flag->setInstruction(NO_INSTRUCTION);
             else this->flag->setInstruction(RESTORE_INSTRUCTION);
-            this->state = EMPTING;
+            this->state = EMPTYING;
             this->door->open();
             this->ts = millis();
         }
         break;
-    case EMPTING:
+    case EMPTYING:
         if(millis() - this->ts >= EMPTY_TIME) {
             this->state = AVAILABLE;
-            if(this->flag->getAllarm() == TEMPERATURE_AND_FULL_ALLARM) this->flag->setAllarm(TEMPERATURE_ALLARM);
+            if(this->flag->getAlarm() == TEMPERATURE_AND_FULL_ALARM) this->flag->setAlarm(TEMPERATURE_ALARM);
             else {
-                this->flag->setAllarm(NO_ALLARM);
+                this->flag->setAlarm(NO_ALARM);
                 this->redLed->switchOff();
                 this->greenLed->switchOn();
                 this->display->clear();
