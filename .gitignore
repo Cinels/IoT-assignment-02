@@ -7,3 +7,4 @@
 .vscode/settings.json
 .venv
 *.mp4
+*history.png
