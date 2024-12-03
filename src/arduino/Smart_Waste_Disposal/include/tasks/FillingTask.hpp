@@ -42,7 +42,7 @@ public:
     void setDevices(WasteDetector* wasteDetector, Led* greenLed, Led* redLed, Display* display, Door* door);
     
     /// @brief the running method, every time is called it checks if the base time is elapsed and if so, 
-    /// depending on the state of the container performs some actions.
+    /// depending on the state of the task performs some actions.
     void tick();
 };
 
