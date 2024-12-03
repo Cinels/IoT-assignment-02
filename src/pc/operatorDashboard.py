@@ -21,6 +21,10 @@ TEMPERATURE__AND_FULL_ALLARM = 3.0
 history_img_path = "./src/pc/history.png"
 history_text_path = "./src/pc/history.txt"
 
+# creates image file if not exists
+file =  open(history_img_path, "w")
+file.close()
+
 #---------------Serial_communication---------------
 
 arduino = serial.Serial(port='COM4', baudrate=9600, timeout=.1)
@@ -95,9 +99,9 @@ def updateImage():
 		photo = Image.open(history_img_path)
 		img = ImageTk.PhotoImage(photo)
 		photo.close()
+		image_label.config(image=img)
 	except IOError:
 		pass	
-	image_label.config(image=img)
 
 # unpack singularly filling and temperature values
 def unpackData(values):
