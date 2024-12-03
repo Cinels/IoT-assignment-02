@@ -15,7 +15,7 @@ state CLOSE
 AWAKE -right-> SLEEP
 SLEEP -left-> AWAKE
 AWAKE -down-> OPEN
-OPEN -up->AWAKE
+OPEN -up-> AWAKE
 OPEN -left-> CLOSE
 CLOSE -up-> AWAKE
 @enduml
