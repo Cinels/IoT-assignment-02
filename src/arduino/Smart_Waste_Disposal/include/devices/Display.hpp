@@ -6,7 +6,7 @@
 #define DISPLAY_POSITION 0, 1
 #define DISPLAY_POSITION_2 0, 2
 
-/// @brief 
+/// @brief Class to use I2C Display with dimensions 20 x 4.
 class Display {
 private:
     LiquidCrystal_I2C* lcd;
