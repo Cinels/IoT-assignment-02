@@ -174,6 +174,27 @@
 
 \chapter{Develop}
 
+    The system is developed in two different languages:\\\\
+    %
+    The container module is developed in \texttt{c++} by using \texttt{PlatformIO} IDE with \texttt{arduino} framework. It uses two external libraries: ``\href{https://github.com/johnrickman/LiquidCrystal_I2C}{LiquidCrystal\_I2C.h}'' to manage the display and ``\href{https://docs.arduino.cc/libraries/servo/}{Servo}'' to manage the servo motor.\\\\
+    % 
+    The operator module is developed in \texttt{python} with two threads: one for the gui and the serial communication, the other to repaint periodically the new history graph. It uses:
+    \begin{itemize}
+        \item ``\href{https://pyserial.readthedocs.io/en/latest/pyserial.html}{serial}'' library to communicate through the serial line with the other module.
+        \item ``\href{https://docs.python.org/3/library/threading.html}{threading}'' library to run multi thread.
+        \item ``\href{https://docs.python.org/3/library/tkinter.html}{tkinter}'' library to manage the graphical part.
+        \item ``\href{https://docs.python.org/3/library/time.html}{time}'' library to be able to manage time.
+        \item ``\href{https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.html}{matplotlib.pyplot}'' to draw graphs.
+        \item ``\href{https://pillow.readthedocs.io/en/stable/}{PIL}'' library to open images and sending to the gui.
+    \end{itemize}
+
+    \begin{figure}[H]
+        \centering{}
+            \includegraphics[width=\textwidth]{img/Assignment-02_SWDS-Schema.png}
+        \caption{Circuit schema}
+        \label{img:schema}
+    \end{figure}
+
 \appendix
 \chapter{User Guide}
 
