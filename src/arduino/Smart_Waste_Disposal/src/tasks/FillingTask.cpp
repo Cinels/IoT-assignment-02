@@ -3,7 +3,7 @@
 
 #define CONTAINER_FULL 100.0
 
-#define EMPTY_TIME 10000
+#define EMPTY_TIME 15000
 
 FillingTask::FillingTask(int period) {
     Task::init(period);

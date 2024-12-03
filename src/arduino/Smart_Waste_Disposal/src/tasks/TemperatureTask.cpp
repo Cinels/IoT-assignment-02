@@ -4,7 +4,7 @@
 #define MAX_TEMP 50
 #define ALERT_TIME 5000
 
-#define RESTORING_TIME 10000
+#define RESTORING_TIME 15000
 
 TemperatureTask::TemperatureTask(int period) {
     Task::init(period);

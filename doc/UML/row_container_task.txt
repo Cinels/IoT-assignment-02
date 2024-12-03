@@ -1,0 +1,21 @@
+@startuml
+hide empty description
+
+state SLEEP
+
+state AWAKE
+
+state OPEN
+
+state CLOSE
+
+
+
+[*] -right-> AWAKE
+AWAKE -right-> SLEEP
+SLEEP -left-> AWAKE
+AWAKE -down-> OPEN
+OPEN -left-> CLOSE
+CLOSE -up-> AWAKE
+
+@enduml
