@@ -1,0 +1,16 @@
+@startuml
+hide empty description
+
+state NOT_FULL
+
+state FULL
+
+state EMPTYING
+
+
+
+[*] -right-> NOT_FULL
+NOT_FULL -down-> FULL : filling level > MAXLEVEL
+FULL -left-> EMPTYING : [empty instruction flag]
+EMPTYING -up-> NOT_FULL : after T3
+@enduml
