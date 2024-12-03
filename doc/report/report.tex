@@ -98,8 +98,79 @@
         %
         The operator module is an active GUI showing the container's information and saving them to produce an history graph.
         It offers two buttons to manage issues of the container, namely the container full or the high temperature of the waste.
+    
+    \section{Detailed Design}
 
-        \section{Detailed Design}
+        The container module is composed by four different and concurrent tasks which are managed by a cooperative scheduler. 
+
+        \subsection{Container management task:}
+
+            The container management task provides to user-related actions.
+            This task is described by a \texttt{synchronous finite state machine}. 
+
+            \begin{figure}[H]
+        	\centering{}
+                \includegraphics[width=\textwidth]{img/container_task.png}
+        	\caption{Container management task}
+        	\label{img:container_task}
+            \end{figure}
+
+            
+            \begin{itemize}
+                \item SLEEP: in this state the container is turned into \texttt{sleep mode} in order to reduce power consumption. It can be woke up by detecting an user.
+                \item AWAKE: it's the initial state. In case of no actions performed by the user for $T_{sleep}$ seconds it will go in \textit{sleep} state. \\
+                If there is no alarm set the container the green led is on, the red led is off and the display is showing ``press open to enter the waste''. In this case the container can go in \textit{open} state after an user pressing the open button.
+                \item OPEN: in this state the container's door is open, the display showing ``press close when done'' and the user can spill his waste inside the container. In case of $T_1$ seconds elapsed or the user has pressed the close button, the state will turn in \texttt{close}, closing the door.
+                In case an alarm is detected by another task, and an alarm flag is set the container will immediately turn back in \texttt{awake} state closing the door, turning on the red led and off the green one, and showing on the display an error message depending on the alarm.
+                \item CLOSE: in this state the door is closed and is shown on the display ``waste received'' for $T_2$ seconds, then the container will go in \texttt{awake} state. 
+            \end{itemize}
+
+        \subsection{Filling monitoring task:}
+
+            The filling monitoring task provides to periodically check the filling level of the container.
+            This task is described by a \texttt{synchronous finite state machine}. 
+
+            \begin{figure}[H]
+        	\centering{}
+                \includegraphics[width=\textwidth]{img/filling_task.png}
+        	\caption{Filling monitoring task}
+        	\label{img:filling_task}
+            \end{figure}
+
+            \begin{itemize}
+                \item AVAILABLE: it's the initial state. It periodically checks the filling of the container and if it surpasses the maximum capacity of the container it turns in \texttt{full} state setting a \texttt{full alarm flag}, turning on the red led, off the green one and displaying on the scree ``container full''.
+                \item FULL: in this state is checked if the \texttt{empty instruction flag} is set. In this case the state is set to \texttt{emptying}, the door is opened and the instruction flag is removed.
+                \item EMPTYING: this state remains for $T_3$ seconds in order to let the container empty and then the state is set to \texttt{available} and the full alarm flag removed. If there is no other alarm flag set it will also turn on the green led, off the red one and set the default ``press open to enter the waste'' message on the display.
+            \end{itemize}
+        
+        \subsection{Temperature monitoring task:}
+
+            The temperature monitoring task provides to periodically check the temperature of the waste.
+            This task is described by a \texttt{synchronous finite state machine}. 
+
+            \begin{figure}[H]
+        	\centering{}
+                \includegraphics[width=\textwidth]{img/temperature_task.png}
+        	\caption{Temperature monitoring task}
+        	\label{img:temperature_task}
+            \end{figure}
+
+            \begin{itemize}
+                \item OK: it's the initial state. It periodically checks the waste temperature and if it surpasses $MAXTEMP$ is set \texttt{alert} state. 
+                \item ALERT: in this state the task checks if the temperature keep being higher than $MAXTEMP$ for $MAXTEMPTIME$. In affirmative case the \texttt{temperature alarm flag} is set, is set the \texttt{alarm} state, the red led is turned on, the green led turned off and the message on the display is ``problem detected''. In negative case the \texttt{ok} status is put back.
+                \item ALARM: in this state the task checks if the \texttt{restore instruction flag} is set and if so it put the \texttt{restoring} state removing the restore flag and opening the door.
+                \item RESTORING: in this state the door stays open for $T_3$ seconds to let empty the container - in this way the temperature will no longer be a problem - and then the task's state is set to \texttt{ok} removing the temperature alarm flag. If there is another alarm flag the display's message is changed depending on the alarm - in this case only the full alarm can be present - otherwise the green led is turned on, the red one turned off and set the default message on the display.
+            \end{itemize}
+
+        \subsection{Operator communication task:}
+
+            This task is simpler compared to previous because is not described by a finite state machine.\\
+            It listens on the serial line waiting for a request. The request can be:
+            \begin{itemize}
+                \item GET DATA: in this case it sends back on the serial line the current filling level of the container and the current temperature of the waste.
+                \item EMPTY: in this case it sets the \texttt{empty instruction flag}.
+                \item RESTORE: in this case it sets the \texttt{restore instruction flag}.
+            \end{itemize}
 
 \chapter{Develop}
 
