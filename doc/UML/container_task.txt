@@ -1,0 +1,21 @@
+@startuml
+hide empty description
+
+state SLEEP
+
+state AWAKE
+
+state OPEN
+
+state CLOSE
+
+
+
+[*] -down-> AWAKE
+AWAKE -left-> SLEEP : after Tsleep
+SLEEP -right-> AWAKE : user detected
+AWAKE -right-> OPEN : open button pressed [no alarm flag]
+OPEN -left-> AWAKE : [alarm flag]
+OPEN -down-> CLOSE : after T1 or close button pressed
+CLOSE -up-> AWAKE : after T2
+@enduml
