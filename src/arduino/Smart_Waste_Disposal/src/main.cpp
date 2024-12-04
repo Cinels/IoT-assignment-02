@@ -1,3 +1,9 @@
+/***
+Embedded Systems and Internet of Things - Assignment-02: Smart Waste Disposal
+Author: Lorenzo Cinelli
+Matricola: 0001070967
+Email: lorenzo.cinelli@studio.unibo.it
+***/
 #include <Arduino.h>
 
 #include "devices/Button.hpp"
